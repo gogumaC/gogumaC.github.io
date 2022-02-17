@@ -1,1 +1,1 @@
-# gogumaC..github.io
+# gogumaC.github.io
