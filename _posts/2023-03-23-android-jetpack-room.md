@@ -15,9 +15,9 @@ layout: single
 
 ## 목차
 
-1. [😵‍💫SQL의 문제점](https://www.notion.so/ROOM-b4929fd84fd340f7942099ae2bdd42f5)
-2. [🤔Room 이란?](https://www.notion.so/ROOM-b4929fd84fd340f7942099ae2bdd42f5)
-3. [🧑‍💻Room 사용법](https://www.notion.so/ROOM-b4929fd84fd340f7942099ae2bdd42f5)
+1. [😵‍💫SQL의 문제점](#sql-api의-문제점)
+2. [🤔Room 이란?](#room이란)
+3. [🧑‍💻Room 사용법](#room-사용법)
 
 ## 😵‍💫SQL api의 문제점
 
@@ -53,12 +53,12 @@ layout: single
 
 각 구성요소는 아래와 같은 그림으로 표현된다.
 
-<image src="/assets/image/230323-android-jetpack-room/room_architecture.png">
+<img src="/assets/image/230323-android-jetpack-room/room_architecture.png">
 
 
 처음에는 위 구조도가 잘 이해되지 않아서 내가 이해한대로 새로 그려보았다.
 
-<image src="/assets/image/230323-android-jetpack-room/room_architecture2.png">
+<img src="/assets/image/230323-android-jetpack-room/room_architecture2.png">
 
 > Entity란?
 
@@ -97,7 +97,7 @@ dependencies {
 
 나도 아직 이부분은 공부 중 이지만 대충 간략히 정리하면 `ksp`는 `kapt`의 대안이라고 한다. 공식문서에서는 `ksp`는 코틀린 코드를 직접 분석하기때문에 2배정도 더 빠르다고 한다!
 
-`kapt`를 사용할 경우 그냥 저 한줄만 추가해주면 되지만 `**ksp`를 사용하는 경우는 `ksp`를 적용해주는 작업이 부수적으로 필요하다.**
+`kapt`를 사용할 경우 그냥 저 한줄만 추가해주면 되지만 **`ksp`를 사용하는 경우는 `ksp`를 적용해주는 작업이 부수적으로 필요하다.**
 
 아래는 `ksp`를 사용할경우 필요한 추가작업이므로 `kapt`를 사용할것이라면 생략해도 좋을것같다.
 
@@ -161,44 +161,36 @@ data class Bookmark(
 
 간혹 아래와 같은 오류가 날수 있다.
 
-<aside>
-❗ Cannot figure out how to save this field into database. You can consider adding a type converter for it.
 
-</aside>
+❗<span style="background-color:	#FF000055"> Cannot figure out how to save this field into database. You can consider adding a type converter for it.
+</span>
 
-Room은 기본 타입을 위한 변환 기능만 제공하고 __entity간 객체 참조는 허용하지 않는다.
+Room은 기본 타입을 위한 변환 기능만 제공하고 __entity간 객체 참조는 허용하지 않는다.__
 
 따라서 복잡한 데이터 구조인 경우에는 어떤식으로 변환해서 디비에 저장할지 직접 typeConverter를 사용해서 정의해 주어야한다.
 
 관련 내용은 아래 링크에서 찾을 수 있다.
 
-[Room을 사용하여 복잡한 데이터 참조  |  Android 개발자  |  Android Developers](https://developer.android.com/training/data-storage/room/referencing-data?hl=ko)
+[Room을 사용하여 복잡한 데이터 참조  \|  Android 개발자  \|  Android Developers](https://developer.android.com/training/data-storage/room/referencing-data?hl=ko)
 
 위와 같은 제약때문에 나의 경우는 Entity로 사용하는 데이터 클래스에 포함할 다른 객체를 상속받는 식으로 사용하였다.
 
-<aside>
-❗ Cannot find setter for field.
-
-</aside>
+❗ <span style="background-color:	#FF000055"> Cannot find setter for field.</span>
 
 entity의 필드는 Room에서 접근해야하므로 필드를 공개하거나 getter,setter메서드를 제공해야한다!
 
 아래는 annotation에 대한 간단한 설명이다.
 
-| annotation | 설명 | 예시 |
-| --- | --- | --- |
-| @Entity | • entity를 정의하는 클래스임을 명시 
-• tableName: 테이블 이름 지정
-• igonredColumns: 필드를 만들지 않을 항목 지정(상속받은 클래스의 항목도 가능!) | @Entity(tableName="테이블 이름",ignoredColumns=["무시할 column"]) |
-| @PrimaryKey | • 각 행을 고유하게 식별하기 위한 고유키를 가진 필드명시
-• autoGenerate속성으로 자동 할당가능  | @PrimaryKey(autoGenerate=ture) |
-| @ColumnInfo | • 해당 필드의 정보 명시
-😯 굳이 이름을 바꾸는 이유는 kotlin은 대부분 camelCase 사용해서 대문자로 단어를 구분하지만 sql에서는 대소문자 구분이 없기 때문에 snake_case으로 바꿔주기 위함! | @ColumInfo(name="열이름") |
-| @Ignore | • 해당 항목의 필드를 유지하지 않음 | @Ignore val picture: Bitmap? |
+ annotation | 설명 | 예시
+ --- | --- | --- 
+ @Entity | • entity를 정의하는 클래스임을 명시 <br/>• tableName: 테이블 이름 지정<br/>• igonredColumns: 필드를 만들지 않을 항목 지정(상속받은 클래스의 항목도 가능!) | `@Entity(tableName="테이블 이름",ignoredColumns=["무시할 column"]) `
+ @PrimaryKey | • 각 행을 고유하게 식별하기 위한 고유키를 가진 필드명시<br/>• autoGenerate속성으로 자동 할당가능  | `@PrimaryKey(autoGenerate=ture) `
+ @ColumnInfo | • 해당 필드의 정보 명시<br/>😯 굳이 이름을 바꾸는 이유는 kotlin은 대부분 camelCase 사용해서 대문자로 단어를 구분하지만 sql에서는 대소문자 구분이 없기 때문에 snake_case으로 바꿔주기 위함! | `@ColumInfo(name="열이름") `
+ @Ignore | • 해당 항목의 필드를 유지하지 않음 | `@Ignore val picture: Bitmap? `
 
 더 자세한 내용이 궁금하면 아래 공식문서를 참고하는것을 추천한다! 
 
-[Room 항목을 사용하여 데이터 정의  |  Android 개발자  |  Android Developers](https://developer.android.com/training/data-storage/room/defining-data?hl=ko)
+[Room 항목을 사용하여 데이터 정의  \|  Android 개발자  \|  Android Developers](https://developer.android.com/training/data-storage/room/defining-data?hl=ko)
 
 ### 3. DAO(Data Access Objects)정의
 
@@ -216,18 +208,14 @@ DAO를 만들때는 아래 사항을 주의해야한다.
 
 #### DAO메서드의 유형
 
-| 종류 | SQL코드 작성여부 | 예시 |
-| --- | --- | --- |
-| 편의 메서드 | X 
-SQL코드 작성 없이 데이터 베이스에서 행을 삽입,업데이트,삭제 가능 | @Insert
-fun insertBothUsers(user1: User, user2: User) |
-| 쿼리 메서드 | O
-자체 SQL 쿼리를 작성하여 데이터 베이스와 상호작용 가능 | @Query("SELECT * FROM user")
-fun loadAllUsers(): Array<User> |
+ 종류 | SQL코드 작성여부 | 예시 
+ --- | --- | --- 
+ 편의 메서드 | X <br/> SQL코드 작성 없이 데이터 베이스에서 행을 삽입,업데이트,삭제 가능 | `@Insert` <br/> `fun insertBothUsers(user1: User, user2: User) `
+ 쿼리 메서드 | O<br/>자체 SQL 쿼리를 작성하여 데이터 베이스와 상호작용 가능 | `@Query("SELECT * FROM user")` <br/> `fun loadAllUsers(): Array<User> `
 
 더 자세한 내용은 공식문서를 확인하면 아주 잘 정리되어있다! 
 
-[Room DAO를 사용하여 데이터 액세스  |  Android 개발자  |  Android Developers](https://developer.android.com/training/data-storage/room/accessing-data?hl=ko)
+[Room DAO를 사용하여 데이터 액세스  \|  Android 개발자  \|  Android Developers](https://developer.android.com/training/data-storage/room/accessing-data?hl=ko)
 
 나는 아래와 같이 Dao를 만들었다.
 
@@ -308,12 +296,10 @@ val users: List<User> = userDao.getAll()
 
 이상태로 앱을 실행시켜보면 아래와 같은 오류가 뜬다.
 
-<aside>
-❗ E/AndroidRuntime: FATAL EXCEPTION: main
-Process: com.gogumac.thenote, PID: 20471
-java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
 
-</aside>
+❗<span style="background-color:	#FF000055"> E/AndroidRuntime: FATAL EXCEPTION: main
+Process: com.gogumac.thenote, PID: 20471
+java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.</span>
 
 이게 뭐냐면 디비 접근을 메인 스레드에서 진행하면 ui에 lock이 걸릴수 있으니 비동기적으로 다른 백그라운드 스레드에서 접근해라 대충 이런 의미이다.
 
@@ -334,14 +320,12 @@ val run = Runnable {
 
 +) 나중에 보니 비동기 DAO쿼리 작성에 대한 문서가 있었다! 참고 하면 도움이 될것같다.
 
-[비동기 DAO 쿼리 작성  |  Android 개발자  |  Android Developers](https://developer.android.com/training/data-storage/room/async-queries?hl=ko)
+[비동기 DAO 쿼리 작성  \|  Android 개발자  \|  Android Developers](https://developer.android.com/training/data-storage/room/async-queries?hl=ko)
 
 +) 
 
-<aside>
-❗ java.lang.IllegalStateException: Room cannot verify the data integrity. Looks like you've changed schema but forgot to update the version number. You can simply fix this by increasing the version number.
 
-</aside>
+❗<span style="background-color:	#FF000055"> java.lang.IllegalStateException: Room cannot verify the data integrity. Looks like you've changed schema but forgot to update the version number. You can simply fix this by increasing the version number.</span>
 
 뭔가 테이블 내용에 변화가 생기면 무결성관련해서 문제가 생기나보다. 
 
@@ -370,11 +354,11 @@ val run = Runnable {
 
 ## 👀참고
 
-[SQLite를 사용하여 데이터 저장  |  Android Developers](https://developer.android.com/training/data-storage/sqlite?hl=ko)
+[SQLite를 사용하여 데이터 저장  \|  Android Developers](https://developer.android.com/training/data-storage/sqlite?hl=ko)
 
-[Room을 사용하여 로컬 데이터베이스에 데이터 저장  |  Android 개발자  |  Android Developers](https://developer.android.com/training/data-storage/room?hl=ko)
+[Room을 사용하여 로컬 데이터베이스에 데이터 저장  \|  Android 개발자  \|  Android Developers](https://developer.android.com/training/data-storage/room?hl=ko)
 
-[kapt에서 KSP로 이전  |  Android 개발자  |  Android Developers](https://developer.android.com/studio/build/migrate-to-ksp?hl=ko)
+[kapt에서 KSP로 이전  \|  Android 개발자  \|  Android Developers](https://developer.android.com/studio/build/migrate-to-ksp?hl=ko)
 
 [[Android] Room 이해 및 활용](https://math-coding.tistory.com/247)
 
