@@ -20,7 +20,7 @@ title                    : "gogumaC🧗 개발 블로그"
 title_separator          : "-"
 subtitle                 : "android"# site tagline that appears below site title in masthead
 name                     : "gogumC"
-description              : "어렵기도하고 재밌기도하고 나중에 짱멋있게 커스텀해야지😊"
+description              : "Go Go GogumaC! gogumaC의 안드로이드 개발 블로그😊"
 url                      : "https://gogumaC.github.io"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : ""# the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
