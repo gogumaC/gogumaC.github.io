@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-05T17:03:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">[android][kotlin] ROOM 개념 및 사용법</title><link href="http://localhost:4000/android/2023/03/23/android-jetpack-room.html" rel="alternate" type="text/html" title="[android][kotlin] ROOM 개념 및 사용법" /><published>2023-03-23T00:00:00+09:00</published><updated>2023-03-23T00:00:00+09:00</updated><id>http://localhost:4000/android/2023/03/23/android-jetpack-room</id><content type="html" xml:base="http://localhost:4000/android/2023/03/23/android-jetpack-room.html"><![CDATA[<p>이번 프로젝트에서는 북마크 기능이 필요해서 DB를 사용해보기로했다. 
+예전에는 SQL 쿼리문으로 DB를 다뤘었는데 너무 불편했어서 이번에는 jetpack Room을 사용해서 DB를 사용해보기로 했다.</p>
+
+<h2 id="목차">목차</h2>
+
+<ol>
+  <li><a href="#sql-api의-문제점">😵‍💫SQL의 문제점</a></li>
+  <li><a href="#room이란">🤔Room 이란?</a></li>
+  <li><a href="#room-사용법">🧑‍💻Room 사용법</a></li>
+</ol>
+
+<h2 id="sql-api의-문제점">😵‍💫SQL api의 문제점</h2>
+
+<ol>
+  <li>원시 SQL 쿼리에 관한 컴파일 시간 확인이 없다.
+-&gt; 데이터가 변경될때 영향받는 SQL 퀴리를 수동으로 업데이트 해야한다!</li>
+  <li>SQL쿼리와 데이터 객체간 변환이 힘들다.</li>
+</ol>
+
+<p>위와 같은 이유때문에 SQLite api에 대한 안드로이드 공식 문서에서는 Room 을 사용하는것을 권장하고 있다.</p>
+
+<h2 id="room이란">🤔Room이란?</h2>
+
+<p>위와 같은 SQLite의 문제점을 해결하기 위해 Android Jetpack에 포함된 지속성 라이브러리이다!</p>
+
+<h3 id="room의-장점">Room의 장점</h3>
+
+<ol>
+  <li>SQL쿼리의 컴파일 시간 확인</li>
+  <li>반복적이고 오류가 발생하기 쉬운 상용구 코드를 최소화하는 Annotation</li>
+  <li>간소화된 데이터베이스 이전경로</li>
+</ol>
+
+<h3 id="room-구성요소">Room 구성요소</h3>
+
+<ul>
+  <li>데이터 베이스 클래스(database class)
+    <ul>
+      <li>데이터 베이스 보유</li>
+      <li>앱의 영구 데이터와의 기본연결을 위한 액세스 포인트 역할</li>
+    </ul>
+  </li>
+  <li>데이터 항목(Data Entities)
+    <ul>
+      <li>앱 데이터 베이스의 테이블</li>
+    </ul>
+  </li>
+  <li>데이터 액세스 객체(DAOs)
+    <ul>
+      <li>앱이 DB의 데이터를 쿼리, 업데이트,삽입, 삭제 하는데 사용할 수 있는 메서드 제공!</li>
+    </ul>
+  </li>
+</ul>
+
+<p>각 구성요소는 아래와 같은 그림으로 표현된다.</p>
+
+<p><img src="/assets/image/230323-android-jetpack-room/room_architecture.png" /></p>
+
+<p>처음에는 위 구조도가 잘 이해되지 않아서 내가 이해한대로 새로 그려보았다.</p>
+
+<p><img src="/assets/image/230323-android-jetpack-room/room_architecture2.png" /></p>
+
+<blockquote>
+  <p>Entity란?</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>db에서 객체 같은 개념!</p>
+
+    <p>ex) 노트</p>
+  </li>
+  <li>
+    <p>인스턴스의 집합</p>
+
+    <p>ex) 빨간노트,노란노트,초록노트 (인스턴스)▶️ 노트(엔터티)</p>
+  </li>
+</ul>
+
+<h2 id="room-사용법">🧑‍💻Room 사용법</h2>
+
+<h3 id="1-gradle-설정">1. gradle 설정</h3>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="kt">def</span> <span class="n">room_version</span> <span class="o">=</span> <span class="s2">"2.5.0"</span>
+
+    <span class="n">implementation</span> <span class="s2">"androidx.room:room-runtime:$room_version"</span>
+    <span class="n">annotationProcessor</span> <span class="s2">"androidx.room:room-compiler:$room_version"</span>
+
+    <span class="c1">// To use Kotlin annotation processing tool (kapt)</span>
+    <span class="n">kapt</span> <span class="s2">"androidx.room:room-compiler:$room_version"</span>
+    <span class="c1">// To use Kotlin Symbol Processing (KSP)</span>
+    <span class="n">ksp</span> <span class="s2">"androidx.room:room-compiler:$room_version"</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>일단은 위 코드를 모듈레벨의 gradle파일에 넣어준다.
+주의할점은 아래두줄의 코드는 둘중 하나만 써야한다는거다.</p>
+
+<p>둘의 차이점을 보면 윗줄 코드는 <code class="language-plaintext highlighter-rouge">kapt</code>라고 쓰여있고 아랫줄은 <code class="language-plaintext highlighter-rouge">ksp</code>이다.</p>
+
+<p>나도 아직 이부분은 공부 중 이지만 대충 간략히 정리하면 <code class="language-plaintext highlighter-rouge">ksp</code>는 <code class="language-plaintext highlighter-rouge">kapt</code>의 대안이라고 한다. 공식문서에서는 <code class="language-plaintext highlighter-rouge">ksp</code>는 코틀린 코드를 직접 분석하기때문에 2배정도 더 빠르다고 한다!</p>
+
+<p><code class="language-plaintext highlighter-rouge">kapt</code>를 사용할 경우 그냥 저 한줄만 추가해주면 되지만 <strong><code class="language-plaintext highlighter-rouge">ksp</code>를 사용하는 경우는 <code class="language-plaintext highlighter-rouge">ksp</code>를 적용해주는 작업이 부수적으로 필요하다.</strong></p>
+
+<p>아래는 <code class="language-plaintext highlighter-rouge">ksp</code>를 사용할경우 필요한 추가작업이므로 <code class="language-plaintext highlighter-rouge">kapt</code>를 사용할것이라면 생략해도 좋을것같다.</p>
+
+<p><strong>[ ksp사용 추가 설정 ]</strong></p>
+
+<ol>
+  <li>
+    <p>최상위 앱레벨의 최상위 gradle파일에 KSP플러그인 선언 ( <a href="https://github.com/google/ksp/releases">버전확인</a> )</p>
+
+    <div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">plugins</span> <span class="o">{</span>
+     <span class="n">id</span> <span class="s1">'com.google.devtools.ksp'</span> <span class="n">version</span> <span class="s1">'1.8.10-1.0.9'</span> <span class="n">apply</span> <span class="kc">false</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>모듈수준 build.gradle파일 설정</p>
+
+    <div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">plugins</span> <span class="o">{</span>
+     <span class="n">id</span> <span class="s1">'com.google.devtools.ksp'</span>
+ <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>여기까지 작업이 끝났다면 아래는 옵션 사항이며 관련 기능이 필요하지않다면 추가하지 않아도 무관하다.</p>
+
+<p>이제 Room사용을 위한 gradle설정이 끝났다!👍</p>
+
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// optional - RxJava2 support for Room</span>
+    <span class="n">implementation</span> <span class="s2">"androidx.room:room-rxjava2:$room_version"</span>
+
+    <span class="c1">// optional - RxJava3 support for Room</span>
+    <span class="n">implementation</span> <span class="s2">"androidx.room:room-rxjava3:$room_version"</span>
+
+    <span class="c1">// optional - Guava support for Room, including Optional and ListenableFuture</span>
+    <span class="n">implementation</span> <span class="s2">"androidx.room:room-guava:$room_version"</span>
+
+    <span class="c1">// optional - Test helpers</span>
+    <span class="n">testImplementation</span> <span class="s2">"androidx.room:room-testing:$room_version"</span>
+
+    <span class="c1">// optional - Paging 3 Integration</span>
+    <span class="n">implementation</span> <span class="s2">"androidx.room:room-paging:$room_version"</span>
+</code></pre></div></div>
+
+<h3 id="2-data-entity-정의">2. Data Entity 정의</h3>
+
+<p>이번 단계에서는 DataEntity를 사용하여 생성할 테이블에 대해 정의한다.</p>
+
+<p>데이터 클래스에 주석(annotation)을 넣어 만드는데 이 데이터 클래스를 사용하여 생성한 객체 하나하나가 entity의 인스턴스가 된다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">open</span> <span class="kd">class</span> <span class="nc">Note</span><span class="p">(</span>
+    <span class="kd">var</span> <span class="py">name</span><span class="p">:</span><span class="nc">String</span><span class="p">?=</span><span class="k">null</span><span class="p">,</span>
+    <span class="kd">var</span> <span class="py">createTime</span><span class="p">:</span> <span class="nc">Date</span><span class="p">?=</span><span class="nc">Date</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+<span class="nd">@Entity</span><span class="p">(</span><span class="n">tableName</span><span class="p">=</span><span class="s">"bookmark_note"</span><span class="p">)</span>
+<span class="kd">data class</span> <span class="nc">Bookmark</span><span class="p">(</span>
+    <span class="nd">@PrimaryKey</span><span class="p">(</span><span class="n">autoGenerate</span> <span class="p">=</span> <span class="k">true</span><span class="p">)</span> <span class="kd">val</span> <span class="py">id</span><span class="p">:</span><span class="nc">Int</span>
+    <span class="p">):</span><span class="nc">Note</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>간혹 아래와 같은 오류가 날수 있다.</p>
+
+<p>❗<span style="background-color:	#FF000055"> Cannot figure out how to save this field into database. You can consider adding a type converter for it.
+</span></p>
+
+<p>Room은 기본 타입을 위한 변환 기능만 제공하고 <strong>entity간 객체 참조는 허용하지 않는다.</strong></p>
+
+<p>따라서 복잡한 데이터 구조인 경우에는 어떤식으로 변환해서 디비에 저장할지 직접 typeConverter를 사용해서 정의해 주어야한다.</p>
+
+<p>관련 내용은 아래 링크에서 찾을 수 있다.</p>
+
+<p><a href="https://developer.android.com/training/data-storage/room/referencing-data?hl=ko">Room을 사용하여 복잡한 데이터 참조  |  Android 개발자  |  Android Developers</a></p>
+
+<p>위와 같은 제약때문에 나의 경우는 Entity로 사용하는 데이터 클래스에 포함할 다른 객체를 상속받는 식으로 사용하였다.</p>
+
+<p>❗ <span style="background-color:	#FF000055"> Cannot find setter for field.</span></p>
+
+<p>entity의 필드는 Room에서 접근해야하므로 필드를 공개하거나 getter,setter메서드를 제공해야한다!</p>
+
+<p>아래는 annotation에 대한 간단한 설명이다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>annotation</th>
+      <th>설명</th>
+      <th>예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>@Entity</td>
+      <td>• entity를 정의하는 클래스임을 명시 <br />• tableName: 테이블 이름 지정<br />• igonredColumns: 필드를 만들지 않을 항목 지정(상속받은 클래스의 항목도 가능!)</td>
+      <td><code class="language-plaintext highlighter-rouge">@Entity(tableName="테이블 이름",ignoredColumns=["무시할 column"]) </code></td>
+    </tr>
+    <tr>
+      <td>@PrimaryKey</td>
+      <td>• 각 행을 고유하게 식별하기 위한 고유키를 가진 필드명시<br />• autoGenerate속성으로 자동 할당가능</td>
+      <td><code class="language-plaintext highlighter-rouge">@PrimaryKey(autoGenerate=ture) </code></td>
+    </tr>
+    <tr>
+      <td>@ColumnInfo</td>
+      <td>• 해당 필드의 정보 명시<br />😯 굳이 이름을 바꾸는 이유는 kotlin은 대부분 camelCase 사용해서 대문자로 단어를 구분하지만 sql에서는 대소문자 구분이 없기 때문에 snake_case으로 바꿔주기 위함!</td>
+      <td><code class="language-plaintext highlighter-rouge">@ColumInfo(name="열이름") </code></td>
+    </tr>
+    <tr>
+      <td>@Ignore</td>
+      <td>• 해당 항목의 필드를 유지하지 않음</td>
+      <td><code class="language-plaintext highlighter-rouge">@Ignore val picture: Bitmap? </code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>더 자세한 내용이 궁금하면 아래 공식문서를 참고하는것을 추천한다!</p>
+
+<p><a href="https://developer.android.com/training/data-storage/room/defining-data?hl=ko">Room 항목을 사용하여 데이터 정의  |  Android 개발자  |  Android Developers</a></p>
+
+<h3 id="3-daodata-access-objects정의">3. DAO(Data Access Objects)정의</h3>
+
+<p>다음으로는 DAO를 만들차례다!</p>
+
+<p>Room에서 DAO의 역할을 다시 되새겨 보자면 DAO는 Room을 사용하여 앱 데이터를 저장할때 저장된 데이터와 상호작용하는 역할을 한다.</p>
+
+<p>여기에 삽입,삭제,업데이트에 관한 메서드를 만들어서 간편하게 DB와 상호작용이 가능하게 해준다!</p>
+
+<p>DAO를 만들때는 아래 사항을 주의해야한다.</p>
+
+<ul>
+  <li>반드시 <code class="language-plaintext highlighter-rouge">@Dao</code> annotation필요</li>
+  <li>인터페이스, 추상클래스로 정의 할수 있지만 일반적으로 <strong>인터페이스</strong>를 사용해야한다!</li>
+  <li>앱 데이터베이스의 데이터와 상호작용하는 메서드를 하나 이상 정의한다.</li>
+</ul>
+
+<h4 id="dao메서드의-유형">DAO메서드의 유형</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>종류</th>
+      <th>SQL코드 작성여부</th>
+      <th>예시</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>편의 메서드</td>
+      <td>X <br /> SQL코드 작성 없이 데이터 베이스에서 행을 삽입,업데이트,삭제 가능</td>
+      <td><code class="language-plaintext highlighter-rouge">@Insert</code> <br /> <code class="language-plaintext highlighter-rouge">fun insertBothUsers(user1: User, user2: User) </code></td>
+    </tr>
+    <tr>
+      <td>쿼리 메서드</td>
+      <td>O<br />자체 SQL 쿼리를 작성하여 데이터 베이스와 상호작용 가능</td>
+      <td><code class="language-plaintext highlighter-rouge">@Query("SELECT * FROM user")</code> <br /> <code class="language-plaintext highlighter-rouge">fun loadAllUsers(): Array&lt;User&gt; </code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>더 자세한 내용은 공식문서를 확인하면 아주 잘 정리되어있다!</p>
+
+<p><a href="https://developer.android.com/training/data-storage/room/accessing-data?hl=ko">Room DAO를 사용하여 데이터 액세스  |  Android 개발자  |  Android Developers</a></p>
+
+<p>나는 아래와 같이 Dao를 만들었다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Dao</span>
+<span class="kd">interface</span> <span class="nc">BookmarkNoteDao</span> <span class="p">{</span>
+    <span class="c1">//쿼리 메서드</span>
+    <span class="nd">@Query</span><span class="p">(</span><span class="s">"SELECT * FROM bookmark_note"</span><span class="p">)</span>
+    <span class="k">fun</span> <span class="nf">getAll</span><span class="p">():</span><span class="nc">List</span><span class="p">&lt;</span><span class="nc">Bookmark</span><span class="p">&gt;</span>
+
+    <span class="c1">//편의 메서드</span>
+    <span class="nd">@Insert</span>
+    <span class="k">fun</span> <span class="nf">addBookmark</span><span class="p">(</span><span class="k">vararg</span> <span class="n">bookmark</span><span class="p">:</span> <span class="nc">Bookmark</span><span class="p">)</span>
+
+    <span class="c1">//편의 메서드</span>
+    <span class="nd">@Delete</span>
+    <span class="k">fun</span> <span class="nf">deleteBookmark</span><span class="p">(</span><span class="n">bookmark</span><span class="p">:</span> <span class="nc">Bookmark</span><span class="p">)</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="4-database">4. DataBase</h3>
+
+<p>거의 마지막 단계에 왔다!</p>
+
+<p>이 단계에서는 DB를 보유할 AppDatabase 클래스를 정의한다.</p>
+
+<p>AppDatabase는 내가 이해하기로는 기기의 DB와 앱의 직접적인 엑세스 포인트 역할인것같다!</p>
+
+<p>얘도 물론 주의점이 있다.</p>
+
+<ul>
+  <li>
+    <p>클래스에는 DB와 연결된 entity를 모두 나열하는 entities배열이 포함된 @Database주석이 달려야한다.</p>
+
+    <p>ex) <code class="language-plaintext highlighter-rouge">@Database(entities = [User::class], version = 1)</code></p>
+  </li>
+  <li>RoomDatabase()클래스를 확장하는 <strong>추상클래스</strong> 여야한다.</li>
+  <li>DB와 연결된 각 DAO클래스에서 DB클래스는 인수가 0개이고 DAO클래스의 인스턴스를 반환하는 추상메서드를 정의해야한다.</li>
+  <li>앱이 단일프로세스일 경우 AppDatabase객체를 인스턴스화 할때 싱글톤 디자인 패턴을 따라야한다.</li>
+  <li>앱이 여러 프로세스에서 실행되는 경우 Database빌더 호출에 enableMultiInstanceInvalidation()을 포함해서 한 프로세스에 appDatabase인스턴스가 있을때 다른 프로세스의 appDatabase 인스턴스를 무효화 해야한다.</li>
+</ul>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Database</span><span class="p">(</span><span class="n">entities</span><span class="p">=[</span><span class="nc">Bookmark</span><span class="o">::</span><span class="k">class</span><span class="p">],</span> <span class="n">version</span><span class="p">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nd">@TypeConverters</span><span class="p">(</span><span class="nc">Converters</span><span class="o">::</span><span class="k">class</span><span class="p">)</span>
+<span class="k">abstract</span> <span class="kd">class</span> <span class="nc">AppDatabase</span><span class="p">:</span> <span class="nc">RoomDatabase</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">abstract</span> <span class="k">fun</span> <span class="nf">bookmarkDao</span><span class="p">():</span><span class="nc">BookmarkNoteDao</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>나는 위에서 typeConverter를 정의했으므로 아래와 같이 명시해주었다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">@TypeConverters(Converters::class)</code></p>
+
+<h3 id="5-데이터베이스-인스턴스-만들기">5. 데이터베이스 인스턴스 만들기</h3>
+
+<p>아래와 같은 코드를 통해 데이터베이스를 인스턴스화 할 수 있다.</p>
+
+<p>위 주의 사항에서도 말했듯이 단일 프로세스로 구동하는 앱일 경우 데이터베이스를 인스턴스화 할때 싱글톤 패턴을 따르는것이 권장된다.</p>
+
+<p>이부분은 기억이 가물가물해서 나중에 다시 정리해야겠다🥲</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">db</span> <span class="p">=</span> <span class="nc">Room</span><span class="p">.</span><span class="nf">databaseBuilder</span><span class="p">(</span>
+            <span class="n">applicationContext</span><span class="p">,</span>
+            <span class="nc">AppDatabase</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">,</span> <span class="s">"database-name"</span>
+        <span class="p">).</span><span class="nf">build</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>사용시에는 아래와 같이 사용한다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">userDao</span> <span class="p">=</span> <span class="n">db</span><span class="p">.</span><span class="nf">userDao</span><span class="p">()</span>
+<span class="kd">val</span> <span class="py">users</span><span class="p">:</span> <span class="nc">List</span><span class="p">&lt;</span><span class="nc">User</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">userDao</span><span class="p">.</span><span class="nf">getAll</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="6-끝">6. 끝?</h3>
+
+<p>이게 끝인가 싶지만 놀랍게도 아직 끝이 아니다!</p>
+
+<p>이상태로 앱을 실행시켜보면 아래와 같은 오류가 뜬다.</p>
+
+<p>❗<span style="background-color:	#FF000055"> E/AndroidRuntime: FATAL EXCEPTION: main
+Process: com.gogumac.thenote, PID: 20471
+java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long period of time.</span></p>
+
+<p>이게 뭐냐면 디비 접근을 메인 스레드에서 진행하면 ui에 lock이 걸릴수 있으니 비동기적으로 다른 백그라운드 스레드에서 접근해라 대충 이런 의미이다.</p>
+
+<p>비동기작업을 위해서는 Coroutine, RxJava, Thread 등의 방법이 있는데 나의 경우 Coroutine을 공부해야할것같아서 공부할겸 코루틴을 사용해보기로했다.😅</p>
+
+<p>코루틴은 따로 정리하려면 시간이 걸릴것같아서 여기에는 간단하게 Thread를 사용해 비동기적으로 디비에 접근하는 코드를 간단히 적어두도록 한다!</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">run</span> <span class="p">=</span> <span class="nc">Runnable</span> <span class="p">{</span>
+           <span class="c1">//여기에서 디비관련 작업 </span>
+           <span class="kd">val</span> <span class="py">files</span><span class="p">=</span><span class="nc">DatabaseManager</span><span class="p">.</span><span class="n">bookmarkDao</span><span class="p">.</span><span class="nf">getAll</span><span class="p">().</span><span class="nf">map</span><span class="p">{</span><span class="n">it</span><span class="p">.</span><span class="n">name</span><span class="p">}</span>
+            <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="s">"BOOKMARK"</span><span class="p">,</span><span class="s">"bookmark : ${files.toList()}"</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kd">val</span> <span class="py">thread</span> <span class="p">=</span> <span class="nc">Thread</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">thread</span><span class="p">.</span><span class="nf">start</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>+) 나중에 보니 비동기 DAO쿼리 작성에 대한 문서가 있었다! 참고 하면 도움이 될것같다.</p>
+
+<p><a href="https://developer.android.com/training/data-storage/room/async-queries?hl=ko">비동기 DAO 쿼리 작성  |  Android 개발자  |  Android Developers</a></p>
+
+<p>+)</p>
+
+<p>❗<span style="background-color:	#FF000055"> java.lang.IllegalStateException: Room cannot verify the data integrity. Looks like you’ve changed schema but forgot to update the version number. You can simply fix this by increasing the version number.</span></p>
+
+<p>뭔가 테이블 내용에 변화가 생기면 무결성관련해서 문제가 생기나보다.</p>
+
+<p>스키마가 변경되었는데 versionNumber를 바꾸지 않았다면 나타나는 오류인것같다.</p>
+
+<p>해결법으로는 어플을 지웠다가 다시 설치하거나 혹은 DatabaseClass에서 <code class="language-plaintext highlighter-rouge">version=1</code>부분을 수정해주면 된다고 한다.</p>
+
+<hr />
+
+<h2 id="️더-알아보고-싶은-내용">🧗‍♀️더 알아보고 싶은 내용</h2>
+
+<p>이부분은 나중에 알아내면 포스팅에 수정해둘 예정이다!👍</p>
+
+<p>혹시 답을 아시는분이 있다면 언제든지 조언을 주셨으면 좋겠다!</p>
+
+<ul>
+  <li>DAO는 왜 인터페이스로 주로 만드는가
+    <ul>
+      <li>아마 애초에 database클래스를 거쳐서 사용하는 이런 구조를 만드려고 인터페이스로 만들지 않았을까 하는 생각이든다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>여기부터는 나중에 공부할내용!</p>
+
+<ul>
+  <li>싱글톤 다시 공부하기</li>
+  <li>Realm</li>
+  <li>Room에서 livedata를 반환할수있다고 livedata공식문서에 나오는데 어떻게 반환하는지</li>
+</ul>
+
+<hr />
+
+<h2 id="참고">👀참고</h2>
+
+<p><a href="https://developer.android.com/training/data-storage/sqlite?hl=ko">SQLite를 사용하여 데이터 저장  |  Android Developers</a></p>
+
+<p><a href="https://developer.android.com/training/data-storage/room?hl=ko">Room을 사용하여 로컬 데이터베이스에 데이터 저장  |  Android 개발자  |  Android Developers</a></p>
+
+<p><a href="https://developer.android.com/studio/build/migrate-to-ksp?hl=ko">kapt에서 KSP로 이전  |  Android 개발자  |  Android Developers</a></p>
+
+<p><a href="https://math-coding.tistory.com/247">[Android] Room 이해 및 활용</a></p>
+
+<p><a href="https://blog.yena.io/studynote/2018/09/08/Android-Kotlin-Room.html">[Android][Kotlin] Room 으로 DB 저장하기</a></p>
+
+<p><a href="https://randomtip.tistory.com/57">Room에서 데이터 무결성을 확인할 수 없습니다.</a></p>]]></content><author><name></name></author><category term="android" /><category term="android" /><category term="room" /><category term="ROOM" /><category term="jetpack" /><summary type="html"><![CDATA[이번 프로젝트에서는 북마크 기능이 필요해서 DB를 사용해보기로했다. 예전에는 SQL 쿼리문으로 DB를 다뤘었는데 너무 불편했어서 이번에는 jetpack Room을 사용해서 DB를 사용해보기로 했다.]]></summary></entry><entry><title type="html">[23.03.09] Smart Factory + Automation World 2023</title><link href="http://localhost:4000/event/2023/03/09/smart-factory+automation-world-2023.html" rel="alternate" type="text/html" title="[23.03.09] Smart Factory + Automation World 2023" /><published>2023-03-09T00:00:00+09:00</published><updated>2023-03-09T00:00:00+09:00</updated><id>http://localhost:4000/event/2023/03/09/smart-factory+automation-world-2023</id><content type="html" xml:base="http://localhost:4000/event/2023/03/09/smart-factory+automation-world-2023.html"><![CDATA[<p>이번에는 서울 코엑스에서 열리는 smart factory + automation world 2023에 참여했다.</p>
+
+<p>8일부터 10일까지 열리는 행사인데 나는 9일인 목요일에 참가했다.</p>
+
+<!-- ![image1](assets\image\230309_smartFactory+automationWorld2023\KakaoTalk_20230317_161001676.jpg) -->
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/main_img.jpg" width="300px" /></p>
+
+<p>서울에 혼자 오는건 처음인데 코엑스는 더더욱 처음이라 두려움 반 기대 반 이었던것같다.</p>
+
+<p>다행히 코엑스는 고속버스 터미널에서 9호선을 타고 10분 정도 걸리는 가까운 위치여서 다행히 코엑스 까지 가는 길을 찾는것은 어렵지 않았다! 🙂</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/to_coex.jpg" width="300px" /> <img src="/assets/image/230309_smartFactory+automationWorld2023/to_coex2.jpg" width="300px" /></p>
+
+<p>근데 코엑스 안에서는 진짜 죽을 맛이었다. 엄청 넓은데다가 길이 무슨 거미줄처럼 꼬여있어서 겨우겨우 등록을 마치고 전시장에 들어갈 수 있었다.(벡스코가 그리웠다..🥲)</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/coex_view.jpg" width="300px" /></p>
+
+<p>전시장은  Hall A,B,C,D를 사용하고 있었다.</p>
+
+<p>전시 내용은 각 홀에 따라 아래와 같다.</p>
+
+<ul>
+  <li>Hall A : aimex
+    <ul>
+      <li>센서</li>
+      <li>PLC,DCS</li>
+      <li>MotionControl</li>
+      <li>산업용 pc,drive</li>
+      <li>FA system</li>
+      <li>Automation Components</li>
+    </ul>
+  </li>
+  <li>Hall B : Korean Vision Show
+    <ul>
+      <li>산업용 카메라, 렌즈, 조명</li>
+      <li>이미지 처리 소프트웨어</li>
+    </ul>
+  </li>
+  <li>Hall C : Smart Factory Expo
+    <ul>
+      <li>Digital Factory</li>
+      <li>Big Data</li>
+      <li>AI</li>
+      <li>Cloud Computing</li>
+      <li>Smart Factory Solution</li>
+      <li>PLM,MES,ERP</li>
+      <li>Smart Sensor</li>
+    </ul>
+  </li>
+  <li>Hall D : Smart Factory Expo)smart logistics pavilion)
+    <ul>
+      <li>산업용 로봇</li>
+      <li>IIOT</li>
+      <li>Smart Logistics</li>
+    </ul>
+  </li>
+</ul>
+
+<p>등록 창구와 가장 가까운 입구가 A홀의 입구였기 때문에 A홀부터 관람을 시작했다.</p>
+
+<p>원래는 홀 별로 관람한 내용을 정리하려고 했는데  내가 길을 잘 못찾아서 나도 모르는 새에 A,B,C,D홀을 떠돌아다니며 이곳저곳 사진을 찍었기 때문에 홀별로 정리는 거의 불가능해졌다…🥲</p>
+
+<p>대신 비슷한 결의 전시가 많았기 때문에 내가 본 몇까지 유형에 따라 정리 해보려고한다.</p>
+
+<h3 id="-공장-자동화"># 공장 자동화</h3>
+
+<p>A홀에 들어가자 마자 눈에 띈것은 무슨 큰 박스가 슉슉 움직이는 전시였다. 나중에 보니 그런식으로 공간 적제를 효율적으로 할수 있다 뭐 그런 거였다. 이 외에도 로봇팔이나 모듈이 박스를 옮기거나, 박스 테이핑을 컷팅해 주는 로봇 등 여러 종류의 공장자동화와 관련된 전시가 많았다.</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/smart_factory1.jpg" width="300px" /> <img src="/assets/image/230309_smartFactory+automationWorld2023/smart_factory2.jpg" width="300px" /></p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/smart_factory3.jpg" width="300px" /> <img src="/assets/image/230309_smartFactory+automationWorld2023/smart_factory4.jpg" width="300px" /></p>
+
+<ul>
+  <li>커피내려주는 로봇 팔도 있었다! →카페사장님들이 봤다면 새로운 인사이트를 얻어가셨을수도 있었을것같다.</li>
+</ul>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/smart_factory_coffee.jpg" width="300px" /></p>
+
+<h3 id="-비전-처리"># 비전 처리</h3>
+
+<p>어느정도 돌아보니 어느 구간부터는 부스마다 카메라가 달려있었다(지금 생각해보니 여기가 B홀이었던것같다)</p>
+
+<p>비전처리는 학교 수업에도 있고 나도 배울까 생각했던 부분이라서 여러모로 관심이 많았다.</p>
+
+<p>비전 처리는 크게 두가지의 부류가 있었던것같다.</p>
+
+<p>첫번째로는 이미지를 이용해 적재된 물체의 객체를 구분하는 것과 두번째는 AI를 이용하여 제품의 불량을 감별해내는것이다.</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/vision_modeling2.jpg" width="300px" /> <img src="/assets/image/230309_smartFactory+automationWorld2023/vision_modeling3.jpg" width="300px" /></p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/vision_crack_check2.jpg" width="300px" /> <img src="/assets/image/230309_smartFactory+automationWorld2023/vision_crack_check4.jpg" width="300px" /></p>
+
+<p>두번째 같은 경우는 반도체같이 아주 작은 생산품의 경우 고화질 이미지가 필요할것같았고 그래서인지 고화질 카메라나 렌즈등 에 대한 전시도 종종 보였다.</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/vision_crack_check1.jpg" /></p>
+
+<p>또 학습을 위해 라벨링을 시키는것도 관심이 가던것 중 하나였는데 어떤 곳은 오토라벨링을 강점으로 내새웠고 어떤곳은 오토라벨링보다는 수작업으로 진행하는 라벨링에서의 정밀성을 장점으로 들며 수작업 라벨링의 체험이 가능했다.</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/vision_crack_check3.jpg" /></p>
+
+<h3 id="-디지털-트윈"># 디지털 트윈</h3>
+
+<p>사실상 내가 제일 기대했던 주제이다. 몇몇 부스를 둘러보았는데 확실히 디지털화 된 현실이 훨씬 분석적이고 가독성이 좋았다. 이런것들을 해내려면 센서와 클라우드를 어떻게 써야할지 배운 내용을 머릿속에서 열심히 굴려보았다.🤔</p>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/digital_tween.jpg" /></p>
+
+<h3 id="결론">🟠결론🟠</h3>
+
+<ul>
+  <li>기업체 운영하는 사람들의 비즈니스 공간 이라는 느낌이 강했다.
+    <ul>
+      <li>학생으로서 여기서 뭘 얻어가기 위해서는 사전지식과 적극적인 참여(질문, 스스로생각)가 필요하다.</li>
+      <li>그렇지 않으면 그냥 오 로봇 신기하다😯 이 이상의 소득이 없는것같다.</li>
+    </ul>
+  </li>
+  <li>현재 산업의 기술 동향을 파악하기 좋은 기회였다.</li>
+  <li>학교에서 배운 기술과 괴리감이 느껴진다.</li>
+  <li>쉑쉑 비싸긴 한데 버거는 맛있다.(감튀는 그럭저럭,,,)</li>
+</ul>
+
+<p><img src="/assets/image/230309_smartFactory+automationWorld2023/shake_shack.jpg" width="300px" /></p>
+
+<ul>
+  <li>좀더 열심히 물어보고 다닐걸 하는 아쉬움이 남는다(서울이 처음이라 쬐금 무서웠다..ㅠ)</li>
+</ul>
+
+<p>다음에 이런 전시회에 갈일이 있으면 미리 관심있는 부분을 체크하고 공부해서 질문할 내용을 정리해 가면 더 효율적으로 도움이 되는 정보를 얻을 수 있을것같다.</p>]]></content><author><name></name></author><category term="Event" /><category term="SmartFactory+AutomationWorld2023" /><category term="smart_factory" /><category term="vision" /><category term="digital_tween" /><summary type="html"><![CDATA[이번에는 서울 코엑스에서 열리는 smart factory + automation world 2023에 참여했다.]]></summary></entry><entry><title type="html">[23.03.03] Global AI Bootcamp 2023 in Busan</title><link href="http://localhost:4000/event/2023/03/03/global-AI-bootcamp-2023-in-busan.html" rel="alternate" type="text/html" title="[23.03.03] Global AI Bootcamp 2023 in Busan" /><published>2023-03-03T00:00:00+09:00</published><updated>2023-03-03T00:00:00+09:00</updated><id>http://localhost:4000/event/2023/03/03/global-AI-bootcamp-2023-in-busan</id><content type="html" xml:base="http://localhost:4000/event/2023/03/03/global-AI-bootcamp-2023-in-busan.html"><![CDATA[<p>이번 금요일에는 센텀에서 열리는 Global AI bootcamp 에 다녀왔다.</p>
+
+<p>원래 인공지능에는 크게 관심이 없었는데 지난 계절학기에 인공지능 관련 수업을 듣고 프로젝트에 도움이 될것같은 부분이 많아서 관심이 가게 되었다.</p>
+
+<p>세션이 여러개 있었는데 지금 하고 있는 프로젝트에 도움이 될만한 내용이나 내가 더 배워야할 내용이 있는지 눈에 불을켜고 열심히 들었다!🔥🔥</p>
+
+<h1 id="김영욱-ms-mvp-전직-ms-직원이-알려주는-chatgpt-전쟁의-기술이야기">(김영욱 MS MVP) 전직 MS 직원이 알려주는 ChatGPT 전쟁의 기술이야기</h1>
+<p>첫번째 세션은 김영욱 microsoft MVP님의 세션이었다.</p>
+
+<p>전반적으로 큰 틀에서 기술과 그에 따른 시대의 변화를 쉽게 설명해주시면서 chat GPT이야기의 서두를 열었다.</p>
+
+<p>그 중 기억에 남는 부분은 아래와 같다.</p>
+
+<ul>
+  <li>AI의 발전에 따라 GPU가 중요해졌고 NVIDIA의 시가 총액이 intel이나 퀄컴, 메타보다 커졌다.</li>
+  <li>메타의 시가총액을 살펴보았을때 메타버스 이슈는 생각보다 크지 않았다는것을 알 수 있다.(이때 주식을 안사서 다행이다.😅)</li>
+  <li>생성 AI의 근본 알고리즘 GAN은 적대적 생성 모델을 통한 학습이다. (위조지폐범🦹과 경찰👮을 예시로 설명해주셨다.)</li>
+  <li>BERT(Google) vs GPT(Open AI) : 데이터가 방대해지면 GPT가 더 성능이 좋다.</li>
+  <li>PC→모바일 , 검색→ 채팅의 시대로 패러다임 시프트가 일어나고 있다.</li>
+</ul>
+
+<p>이번에서는 기술이 어떻게 사회를 변화시키고 있는지에 대해 다시한번 생각해 보는 계기가 되었던것같다. 기술의 발전이 너무 빨리일어나고 있는 현 시대지만 열심히 따라가봐야겠다는 생각이 든다!</p>
+
+<h1 id="전미정-ms-mvp-ms-azure-open-ai-service">(전미정 MS MVP) MS Azure Open AI Service</h1>
+
+<p>두번째 세션은 전미정 microsoft MVP님의 세션이었다.</p>
+
+<p>이번 세션에서는 MS와 open AI가 어떤 관계를 구축하고 있는지, 왜 두 단체가 협력하고 있는지 등을 알려주셨고 이러한 협력의 결과인 MS Azure의 Open AI 서비스에대한 설명을 들을 수 있었다.</p>
+
+<p>세션의 내용을 정리해 보면 아래와 같다.</p>
+
+<h2 id="ms---open-ai">MS - Open AI</h2>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>비슷한 비전( 기술을 통한 공익의 증진 )을 가졌기에 협력중</td>
+          <td>exclusive license : 독점계약</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul>
+      <li>
+        <p>OpenAI</p>
+
+        <blockquote>
+          <p>“Ensure AGI benefits all humanity”</p>
+
+        </blockquote>
+      </li>
+      <li>
+        <p>Microsoft</p>
+
+        <blockquote>
+          <p>“Empower every person and every organization on the planet to achieve more.”</p>
+
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>Azure AI
+    <ul>
+      <li>scenario based services (비디오 인덱서에 넣으면 자막 생성해줌) 등 재미있는 기능이 많은것같다 한번 써보면 재미있을것같다!</li>
+      <li>Azure Open AI
+        <ul>
+          <li>OpenAI에서 제공하는 서비스들을 Azure에서사용할수 있다!</li>
+          <li>Azure에서 api+비즈니스 관련기능 을 제공하기 때문에 실무에서 사용하기 더 좋다고한다.</li>
+          <li>가격은 oepn AI=Azure Open AI !</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>이외에도 재미있는 내용이 많았는데 Azure을 써본 경험이 있는 나로써는 굉장히 재미있어보이는 기능들이 많았다. 이번에 Azure Pass로 크레딧도 받은김에 몇몇 기능은 실제로 써보면 좋을것같다.</p>
+
+<h1 id="송윤희-ms-mvp-ms-power-bi의-ai기능으로-데이터에서-인사이트-찾기">(송윤희 MS MVP) MS Power BI의 AI기능으로 데이터에서 인사이트 찾기</h1>
+
+<p>세번째 세션전에 넌센스 퀴즈를 하며 잠깐 쉬는 시간을 가졌는데 내가 한문제 맞춰서 텀블러를 받게되었다!😄이</p>
+
+<p>이후 시작된 세번째 세션에서는 MS Power 시리즈 중 Power BI에 있는 AI기능에 대해서 송윤희 microsoft MVP님이 강의 해주셨다.</p>
+
+<p>일단 Power BI가 무엇인지 몰랐었는데 사업 데이터를 손쉽게 시각화 및 분석을 해주어서 인사이트를 얻고 데이터 기반의 결정을 내리는데 도움을 주는 툴이라고 한다.</p>
+
+<p>송윤희 mvp님이 데모를 보여주셨는데 사업을 하는 사람들이 쓴다면 굉장히 유용할것같은 기능이 많았고 시각화 관련기능이 굉장히 강력해보였다. 거기에 AI기능이 더해져 분석 기능이 추가되니 굉장히 활용도가 높아보였다.</p>
+
+<p>나도 나중에 사업을 하게 된다면 매출관리 등에서 꼭 써보면 좋을것같았다.</p>
+
+<h1 id="김도균-ms-mvp-azure-arc지원-머신-러닝-서비스를-활용해-다른-클라우드에서-azure-머신러닝-사용하기">(김도균 MS MVP) “Azure Arc지원 머신 러닝” 서비스를 활용해 다른 클라우드에서 Azure 머신러닝 사용하기</h1>
+
+<p>네번째 세션은 김도균 microsoft MVP님의 세션으로 Azure Arc에 대한 세션이었다.</p>
+
+<p>Azure Arc라는 서비스를 처음 들어봤었는데 스타크래프트의 다크아칸을 비교하며 예시를 들어주셔서 쉽게 이해할 수 있었다.</p>
+
+<p>다크 아칸은 적을 포섭하는 유닛인데 이처럼 Azure Arc도 AWS등 타사의 클라우드 유저를 Azure로 끌어들이는 역할을 하는 서비스였다.</p>
+
+<p>더 자세히는 다른 서비스(타사 서비스나 온프레미스)를 사용하고 있는 소비자에게 Azure Arc를 통해 Azure의 관리 서비스와 Azure AI등의 서비스를 제공해서 Azure의 서비스에 익숙해지게 한 후에 점점 Azure로 끌어들이는 느낌으로 이해했다.</p>
+
+<p>굉장히 전문용어들이 많이 나왔는데 지난학기에 사물인터넷에서 클라우드 컴퓨팅을 배워서 일부분을 겨우 이해할수 있었다. (쿠버네티스 부분은 잘 모르는 내용이었는데 나중에 공부해봐야할 필요가 있어보인다.)</p>
+
+<p>비즈니스에서 사용되는 시나리오도 몇개 소개해주셨는데 MS가 굉장히 똑똑하게 소비자를 끌어들이고 있구나라는 생각이 들었다.</p>
+
+<p>이것도 나중에 한번 써보면 여러모로 용도가 많을것이라는 생각이 들었다.</p>
+
+<h1 id="박은정-ms-mvp-ai와-ms365가-만나면">(박은정 MS MVP) AI와 MS365가 만나면?</h1>
+
+<p>다섯번째 세션은 박은정 microsoft MVP님의 세션이었다. 이분이 내신 퀴즈를 맞춰서 경품을 받았기 때문에 열심히 들었다😄</p>
+
+<p>Microsoft 365에 있는 AI기능들 대해서 이야기를 해주셨는데 여러 비즈니스 관련 기능들도 무척 재미있어보였지만 가장 기억에 남는것은 Virtual Agent에서 보여주신 AI봇을 만드는 데모였다.</p>
+
+<p>여기서 만든 AI봇을 웹사이트나 다른 곳에 배포도 가능하다고해서 나도 포트폴리오에 적용해보면 꽤 재미있을것같다는 생각이 들었다.</p>
+
+<p>Power App에 대한것도 인상 깊었는데 간단한 앱정도는 노코드로 돌아가는 세상이 되고있구나 라는 생각을 하며 안드로이드 개발자로서 고급기능을 익히지 않으면 금방 컴퓨터에게 따라잡힐것같다는 생각도 들었다.😅</p>
+
+<h1 id="창원대학교-정보통신공학과-박동규-교수-재미있는-생성-인공지능-현황">(창원대학교 정보통신공학과 박동규 교수) 재미있는 생성 인공지능 현황</h1>
+
+<p>마지막 세션은 창원대학교 박동규 교수님의 세션이었다. 굉장히 유쾌하신 분이라서 마지막 세션이라 힘들었는데도 재미있게 들었던것같다.</p>
+
+<p>이번 세션에서는 생성인공지능을 사용한 여러 툴에 대해 알려주시고 데모를 보여주셨다.</p>
+
+<p>주로 이미지 관련이었는데 이부분은 이전에 다른 사람이 작업하는 것을 본적이 있어서 그냥 그림을 감상하면서 보았다.</p>
+
+<p>이거다! 싶었던것은 로고를 생성해주는 모델이었는데 안드로이드 어플을 종종 만드는 나로서는 평소 아이콘 만들기가 굉장히 힘들었는데 간단하게 고퀄리티의 아이콘을 만들수 있다는 희망이 보여서 너무 행복했다.</p>
+
+<p>이번에 만드는 프로젝트에 이런 부분을 활용한다면 더 재미있게 작업을 할 수 있을것같다!</p>
+
+<h1 id="qa">❓Q&amp;A❓</h1>
+
+<p>Q: 모델의 기능 중 하나는 예측인데 왜 ChatGPT는 미래를 예측하지 못하는가?</p>
+
+<p>A: ChatGPT는 문장에서 다음단어를 예측하는데 특화된모델이며 미래를 예측하는것에는 특화되지 않았다.</p>
+
+<p>Q: ChatGPT는 왜 틀린 사실을 진실처럼 이야기 하는가</p>
+
+<p>A: ChatGPT는 내가 가진 사실을 확인하거나 정리하는것을 잘한다. 모르는것을 검색하는 용도는 아니다. 실제로 ChatGPT에 복잡한 계산을 물어보면 틀리지만 파이썬 코드에 이런 계산을 돌려주라고 요청하면 정확한 값을 제시한다.</p>
+
+<h1 id="정리">🙌정리🙌</h1>
+
+<p>이번 행사는 거의 6시간 연속으로 진행되서 굉장히 힘들었지만 지식적으로 얻어가는 부분과 프로젝트에 적용할만한 영감을 꽤 여럿 얻어서 지나고 보니 굉장히 만족스럽다.</p>
+
+<p>앞으로도 이런 행사에 열심히 참여해서 새로운 소스를 얻고 이를 활용해서 새로운 시도를 할 수 있는 개발자가 될수있었으면 좋겠다!</p>]]></content><author><name></name></author><category term="Event" /><category term="GlobalAIBootcamp" /><category term="AI" /><category term="microsoft" /><summary type="html"><![CDATA[이번 금요일에는 센텀에서 열리는 Global AI bootcamp 에 다녀왔다.]]></summary></entry><entry><title type="html">[백준]1181 단어정렬 (kotlin)</title><link href="http://localhost:4000/baekjoon/2023/02/24/%EB%B0%B1%EC%A4%80-1181_%EB%8B%A8%EC%96%B4%EC%A0%95%EB%A0%AC_kotlin.html" rel="alternate" type="text/html" title="[백준]1181 단어정렬 (kotlin)" /><published>2023-02-24T00:00:00+09:00</published><updated>2023-02-24T00:00:00+09:00</updated><id>http://localhost:4000/baekjoon/2023/02/24/%5B%EB%B0%B1%EC%A4%80%5D1181_%EB%8B%A8%EC%96%B4%EC%A0%95%EB%A0%AC_kotlin</id><content type="html" xml:base="http://localhost:4000/baekjoon/2023/02/24/%EB%B0%B1%EC%A4%80-1181_%EB%8B%A8%EC%96%B4%EC%A0%95%EB%A0%AC_kotlin.html"><![CDATA[<p><a href="https://www.acmicpc.net/problem/1181">1181번: 단어 정렬</a></p>
+
+<p>이번에 푼 문제는 단어를 두가지 조건에 따라 정렬하는것이었다.</p>
+
+<p>조건은 아래와같다.</p>
+
+<ol>
+  <li>단어 길이 순 오름차순 정렬</li>
+  <li>길이가같다면 알파벳 순으로 정렬</li>
+  <li>중복되는 단어는 하나로 통일</li>
+</ol>
+
+<h3 id="try1-pq">TRY1. PQ</h3>
+
+<p>1번 조건을 보고 자료구조시간에 배운 priorityQueue가 생각났다.</p>
+
+<p>구글링 결과 코틀린에서 pq를 사용하기 위해서는</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">java.util.*</span>
+</code></pre></div></div>
+
+<p>위와 같이 사전에 import가 필요하다.</p>
+
+<p>pq를 사용해 코드를 짜보니 조건2가 걸렸다. pair을 사용해 첫번째 원소 기준으로 정렬을 하려고했는데 막상해보니 pq는 일반적인 방법으로는 pair을 원소로 넣을 수 없었다.</p>
+
+<p>검색을 했더니 Comparator라는걸 사용해서 어떻게 할수 있다고 나와있어서 적용해보았는데 comparator 공부를 덜 해서 그런지 문법적인 오류와 실행오류가 꽤 많이 나왔다.</p>
+
+<p>그런 상황에서 collection을 정렬하는방법을 보니 더 간단해 보여서 평소에 잘사용하는 mutableList과 정렬함수 sortedBy를 사용해 정렬을 시도해보았다.</p>
+
+<h3 id="try2-sortedby">TRY2. sortedBy{}</h3>
+
+<p>sortedBy를 사용해 정렬을 시도했다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//대충 이렇게</span>
+<span class="n">list</span><span class="p">.</span><span class="nf">sortedBy</span><span class="p">{</span><span class="n">it</span><span class="p">.</span><span class="n">length</span><span class="p">}</span>
+<span class="n">list</span><span class="p">.</span><span class="nf">forEach</span><span class="p">{</span>
+	<span class="nf">println</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>왠지 정렬이 되지 않았다. 참고한 블로그에서는 되는것같았는데,, 좀 당황스러웠다.</p>
+
+<h3 id="try3-sortedwithcomparatorthenby">TRY3. sortedWith{},comparator,thenBy{}</h3>
+
+<p>문제를 찾았다. sortedBy로 리턴되는 값이 정렬된 리스트인데 그걸 저장하지 않고 그냥 이전 데이터를 다룬것이 문제였다!</p>
+
+<p>이부분을 찾다가 블로그에서 이 조건들과 상당히 흡사한 코드를 찾았다. comparaotr로 정렬조건을 명시한 후 두번째 조건은 thenBy를 사용해 comparaor를 결합하여 만든다.</p>
+
+<p>이후 sortedWith를 사용해서 정렬을 완료했다.</p>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">val</span> <span class="py">lengthComparator</span><span class="p">=</span><span class="n">compareBy</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;{</span><span class="n">it</span><span class="p">.</span><span class="n">length</span><span class="p">}</span>
+    <span class="kd">val</span> <span class="py">comparator</span><span class="p">=</span><span class="n">lengthComparator</span><span class="p">.</span><span class="nf">thenBy</span><span class="p">{</span><span class="n">it</span><span class="p">}</span>
+
+    <span class="kd">val</span> <span class="py">words</span><span class="p">=</span> <span class="n">mutableSetOf</span><span class="p">&lt;</span><span class="nc">String</span><span class="p">&gt;()</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="k">in</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">num</span><span class="p">){</span>
+        <span class="kd">val</span> <span class="py">word</span><span class="p">=</span><span class="nf">readLine</span><span class="p">()</span><span class="o">!!</span>
+        <span class="n">words</span><span class="p">.</span><span class="nf">add</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">words</span><span class="p">.</span><span class="nf">sortedWith</span><span class="p">(</span><span class="n">comparator</span><span class="p">).</span><span class="nf">forEach</span><span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"$it\n"</span><span class="p">)</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="try4-mutableset사용">TRY4. mutableSet사용</h3>
+
+<p>출력을 해보니 결과가 뭔가 달랐다. 생각해보니 조건3을 까맣게 잊고있었다!</p>
+
+<p>중복을 없애는데는 set이 가장 간편해보여 mutableList→mutableSet으로 자료형을 변경하였다.</p>
+
+<p>여기까지 해서 문제 제출을 했더니 720ms가 나왔다.</p>
+
+<hr />
+
+<h3 id="advanced">[Advanced]</h3>
+<p>1등의 시간을 보니 252ms가 나왔다.</p>
+
+<p>처리시간이 세배정도 차이가 나는 것을 보니 개선의 여지가 다분해 보였다.</p>
+
+<p>일단 상위권 코드들을 모아서 내 코드와 차이점을 분석 해보았다.</p>
+
+<ul>
+  <li>
+    <p>차이점1 : 입출력 버퍼</p>
+
+    <div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nc">BufferedReader</span><span class="p">(</span><span class="nc">InputStreamReader</span><span class="p">(</span><span class="nc">System</span><span class="p">.</span><span class="n">`in`</span><span class="p">))</span>
+  <span class="nc">BufferedWriter</span><span class="p">(</span><span class="nc">OutputStreamWriter</span><span class="p">(</span><span class="nc">System</span><span class="p">.</span><span class="k">out</span><span class="p">))</span>
+</code></pre></div>    </div>
+
+    <p>아래 블로그에 따르면 기존에 썼던 코드는 키보드 입력 즉시 입력을 프로그램으로 보내는것이고 위의 입출력버퍼를 사용하면 키보드 입력을 버퍼에 임시로 모아두었다가 버퍼가 다 차거나 개행문자를 만났을때 한번에 프로그램으로 보낸다.</p>
+
+    <p>그냥 들었을때는 둘이 큰 차이가 없어보이지만 데이터 입출력은 자원이 많이 필요하므로 한번에 보내는것이 더 효율적이라고 한다.</p>
+
+    <p><a href="https://soopeach.tistory.com/257">BufferedReader &amp; BufferedWriter - 빠른 입출력(Kotlin - 코틀린). feat, 자바</a></p>
+  </li>
+  <li>
+    <p>차이점2 : 정렬방식</p>
+
+    <p>자료구조시간에 정렬 방법을 몇개 배웠었는데 그중 퀵솔트 방식을 쓴 코드들이 종종 보였다. 이부분은 기억이 희미하기도하고 다 못배운 정렬방법도 있어서 나중에 다시 공부해서 따로 포스팅을 하기로한다.</p>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Baekjoon" /><category term="Beakjoon" /><category term="algorithm" /><category term="kotlin" /><summary type="html"><![CDATA[1181번: 단어 정렬]]></summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/jekyll/update/2017/10/20/first-post.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2017-10-20T21:26:28+09:00</published><updated>2017-10-20T21:26:28+09:00</updated><id>http://localhost:4000/jekyll/update/2017/10/20/first-post</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2017/10/20/first-post.html"><![CDATA[<p>hello hello</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[hello hello]]></summary></entry></feed>
