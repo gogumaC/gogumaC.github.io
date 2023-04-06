@@ -33,7 +33,7 @@ layout: single
 
 
 
-위와 같은 SQLite의 문제점을 해결하기 위해 Android Jetpack에 포함된 지속성 라이브러리이다!
+위와 같은 SQL의 문제점을 해결하기 위해 Android Jetpack에 포함된 지속성 라이브러리이다!
 
 ### Room의 장점
 
