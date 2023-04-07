@@ -10,12 +10,14 @@
 # Review documentation to determine if you should use `theme` or `remote_theme`
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
+github: [metadata]
+
 # theme                  : "minimal-mistakes-jekyll"
 remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "dark" #"default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "en-US"
+locale                   : "ko" #default "en-US"
 title                    : "gogumaC🧗 개발 블로그"
 title_separator          : "-"
 subtitle                 : "android" # site tagline that appears below site title in masthead
@@ -60,7 +62,7 @@ reCaptcha:
 atom_feed:
   path                   : # blank (default) uses feed.xml
   hide                   : # true, false (default)
-search                   : # true, false (default)
+search                   : true # true, false (default)
 search_full_content      : # true, false (default)
 search_provider          : # lunr (default), algolia, google
 algolia:
@@ -72,7 +74,7 @@ google:
   search_engine_id       : # YOUR_SEARCH_ENGINE_ID
   instant_search         : # false (default), true
 # SEO Related
-google_site_verification :
+google_site_verification : "a3UejDYIxnDamAeRMHbsNOsi-tIgT7T-qgYSqb0sidc"
 bing_site_verification   :
 naver_site_verification  :
 yandex_site_verification :
