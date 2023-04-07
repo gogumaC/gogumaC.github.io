@@ -1,1 +1,0 @@
-# gogumaC.github.io

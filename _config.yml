@@ -11,8 +11,8 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : mmistakes/minimal-mistakes
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+remote_theme           : "mmistakes/minimal-mistakes"
+minimal_mistakes_skin    : "dark" #"default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
 locale                   : "en-US"
@@ -20,7 +20,7 @@ title                    : "gogumaC🧗 개발 블로그"
 title_separator          : "-"
 subtitle                 : "android" # site tagline that appears below site title in masthead
 name                     : "gogumC"
-description              : "Go Go GogumaC! gogumaC의 안드로이드 개발 블로그😊"
+description              : "Go!gumaC! gogumaC의 안드로이드 개발 블로그😊"
 url                      : "https://gogumaC.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "gogumaC/gogumaC.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -43,7 +43,7 @@ comments:
   utterances:
     theme                : "boxy-light" # "github-light" (default), "github-dark"
     issue_term           : "pathname" # "pathname" (default)
-    label                : "[💬comment]"
+    label                : "💬comment"
   giscus:
     repo_id              : # Shown during giscus setup at https://giscus.app
     category_name        : # Full text name of the category
@@ -107,11 +107,11 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am an **amazing** person."
   location         : "Busan"
-  email            : "dbqlswjdgus1@gmail.com"
+  email            : "gogumac.dev@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      url: "mailto:gogumac.dev@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
