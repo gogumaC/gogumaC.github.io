@@ -1,6 +1,6 @@
 ---
 title: "[kotlin] withIndex() 동작 원리 분석"
-excerpt : "withIndex()는 왜 lazy한 특성을 가지는가"
+excerpt : "withIndex()는 왜 lazy한 특성을 가질까?"
 categories: kotlin
 tags:
     - [kotlin,withIndex,interface,Iterable,IndexingIterable,Iterator,IndexingIterator,IndexedValue]
@@ -100,7 +100,8 @@ println(indexedList[0].value)
 - index : 해당 원소의 인덱스
 - value : 해당 원소의 값
 
-대충 이해했다면 아래에서 `withIndex()`에 대한 자세한 동작 방식을 정리해보기로 한다.
+<br>
+여기까지 대충 이해했다면 아래에서 `withIndex()`에 대한 자세한 동작 방식을 정리해보기로 한다.
 
 ## 👀 `withIndex()` 분석
 
