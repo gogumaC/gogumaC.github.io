@@ -5,7 +5,9 @@ categories:
 tags:
     - [SmartFactory+AutomationWorld2023,smart_factory,vision,digital_tween]
 date : 2023-03-09
-last-modified_at: 2023-03-17
+last_modified_at: 2023-03-17
+toc : ture
+toc_sticky : true
 ---
 이번에는 서울 코엑스에서 열리는 smart factory + automation world 2023에 참여했다.
 

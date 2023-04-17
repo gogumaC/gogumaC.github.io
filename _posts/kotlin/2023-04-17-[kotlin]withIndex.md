@@ -6,6 +6,8 @@ tags:
     - [kotlin,withIndex,interface,Iterable,IndexingIterable,Iterator,IndexingIterator,IndexedValue]
 date : 2023-04-17
 last_modified_at: 2023-04-17
+toc : ture
+toc_sticky : true
 ---
 요즘 알고리즘을 풀 때 시간초과가 많이 생겨서 코드에 불필요한 반복문이 있는지 확인하게된다.
 

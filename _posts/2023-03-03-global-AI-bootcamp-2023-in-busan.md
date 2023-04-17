@@ -5,7 +5,9 @@ categories:
 tags:
     - [GlobalAIBootcamp,AI,microsoft]
 date : 2023-03-03
-last-modified_at: 2023-03-05
+last_modified_at: 2023-03-05
+toc : ture
+toc_sticky : true
 ---
 이번 금요일에는 센텀에서 열리는 Global AI bootcamp 에 다녀왔다. 
 
