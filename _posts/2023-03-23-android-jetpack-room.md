@@ -55,12 +55,12 @@ toc_sticky : true
 
 각 구성요소는 아래와 같은 그림으로 표현된다.
 
-<img src="/assets/image/230323-android-jetpack-room/room_architecture.png">
+<img src="/assets/image/android/230323-android-jetpack-room/room_architecture.png">
 
 
 처음에는 위 구조도가 잘 이해되지 않아서 내가 이해한대로 새로 그려보았다.
 
-<img src="/assets/image/230323-android-jetpack-room/room_architecture2.png">
+<img src="/assets/image/android/230323-android-jetpack-room/room_architecture2.png">
 
 > Entity란?
 
