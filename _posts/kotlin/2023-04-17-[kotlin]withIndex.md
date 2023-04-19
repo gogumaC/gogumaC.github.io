@@ -109,7 +109,7 @@ println(indexedList[0].value)
 
 우리가 흔히 쓰는 `withIndex()`함수는 **Iterable**인터페이스의 확장함수이다.
 
-위에서 언급했듯이 **Interable**은 대충 list나 array라고 생각하면 편하다.
+위에서 언급했듯이 **Iterable**은 대충 list나 array라고 생각하면 편하다.
 
 ```kotlin
 val indexedList=list.withIndex()
