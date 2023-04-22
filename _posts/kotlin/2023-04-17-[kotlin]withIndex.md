@@ -5,7 +5,7 @@ categories: kotlin
 tags:
     - [kotlin,withIndex,interface,Iterable,IndexingIterable,Iterator,IndexingIterator,IndexedValue]
 date : 2023-04-17
-last_modified_at: 2023-04-17
+last_modified_at: 2023-04-22
 toc : ture
 toc_sticky : true
 ---
@@ -140,7 +140,7 @@ internal class IndexingIterable<out T>(private val iteratorFactory: () -> Iterat
 }
 ```
 
-- Iterator의 iterator()함수를 오버라이드 하여 Iterator를 상속받는 **IndexingIterator**를 반환한다.
+- Iterable의 `iterator()`함수를 오버라이드 하여 Iterator를 상속받는 **IndexingIterator**를 반환한다.
 
 이제부터 설명할 **IndexingIterator**가 `withIndex()`의 lazy 한 특성의 핵심이다!
 
@@ -192,17 +192,17 @@ final override fun next(): IndexedValue<T> = IndexedValue(checkIndexOverflow(ind
 
 ### ➰ [Iterator.withIndex()](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-index.html)
 
-Iterator에서도 withIndex()를 사용할수 있다.
+Iterator에서도 `withIndex()`를 사용할수 있다.
 
-여기서는 withIndex의 기능을 아래와 같이 설명하고 있다.
+여기서는 `withIndex()`의 기능을 아래와 같이 설명하고 있다.
 
 > Returns an Iterator that wraps each element produced by the original iterator into an IndexedValue containing the index of that element and the element itself.
 <br>원래 iterator에 의해 만들어진 각 원소를 IndexedValue로 감싸서 반환
 > 
 
-사실상 동작원리는 위에서 봤던 Iterable.withIndex()와 동일하다.
+사실상 동작원리는 위에서 봤던 `Iterable.withIndex()`와 동일하다.
 
-다만 차이점은 Iterable.withIndex()는 **IndexingIterable**을 반환하지만 Iterator().withIndex는 **IndexingIterator**를 반환한다는것이다.
+다만 차이점은 `Iterable.withIndex()`는 **IndexingIterable**을 반환하지만 `Iterator.withIndex()`는 **IndexingIterator**를 반환한다는것이다.
 
 ```kotlin
 public fun <T> Iterator<T>.withIndex(): Iterator<IndexedValue<T>> = IndexingIterator(this)
@@ -216,7 +216,7 @@ public fun <T> Iterator<T>.withIndex(): Iterator<IndexedValue<T>> = IndexingIter
 
 엄청 힘들었는데 동시에 함수 동작방식을 공부하는게 재밌고 신기하기도했다.
 
-withIndex()를 조사하면서 Iterable이랑 Iterator에 대해서도 더 자세히 알 수 있었고 얘네들을 상속한 IndexingIterable, IndexingIterator를 보면서 나도 이런 비슷한 커스텀을 할 수 있을 것 같다는 생각도 들었다.
+`withIndex()`를 조사하면서 Iterable이랑 Iterator에 대해서도 더 자세히 알 수 있었고 얘네들을 상속한 IndexingIterable, IndexingIterator를 보면서 나도 이런 비슷한 커스텀을 할 수 있을 것 같다는 생각도 들었다.
 
 앞으로도 재미있는 구조의 함수가 있으면 이렇게 종종 공부해보면 재미있을것같다.
 
