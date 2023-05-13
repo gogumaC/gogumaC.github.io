@@ -1,7 +1,7 @@
 ---
 title: "[23.03.09] Smart Factory + Automation World 2023"
 categories:
-    - Event
+    - event
 tags:
     - [SmartFactory+AutomationWorld2023,smart_factory,vision,digital_tween]
 date : 2023-03-09

@@ -1,7 +1,7 @@
 ---
 title: "[23.03.03] Global AI Bootcamp 2023 in Busan"
 categories:
-    - Event
+    - event
 tags:
     - [GlobalAIBootcamp,AI,microsoft]
 date : 2023-03-03
