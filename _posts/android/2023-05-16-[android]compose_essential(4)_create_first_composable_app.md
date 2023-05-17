@@ -115,7 +115,7 @@ private fun MyApp(modifier:Modifier=Modifier){
 @Composable
 fun Container(
 	modifier=...,
-	content: @Composable()->Unit
+	content: @Composable ()->Unit
 ){...}
 
 //사용
