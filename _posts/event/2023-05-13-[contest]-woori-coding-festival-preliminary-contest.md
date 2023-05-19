@@ -5,7 +5,7 @@ excerpt : "Woori 코딩 페스티벌 예선(Java) 참가 후기"
 tags:
     - [woori, contest, coding festival, java]
 date : 2023-05-13
-last_modified_at: 2023-05-13
+last_modified_at: 2023-05-19
 
 ---
 [Woori 코딩 페스티벌](https://www.ybmit.com/event/revent/woori_Code/2023/event.jsp)
@@ -48,3 +48,17 @@ Woori코딩 페스티벌도 그 기회 중 하나로 경험도 쌓을겸 재미�
 인줄 알았지만 작년 후기를 보니 홈페이지가 아니라 문자로 공지하는것 같다..!
 
 합불을 떠나서 부족한 부분들을 잘 공부해 둬서 다음에는 걸림돌이 되지 않도록 해야겠다!🔥🔥
+
+---
+
+### 5월 19일 업데이트 <br>
+
+오늘 드디어 예선 결과에 대한 문자를 받았다!!!
+
+결과는 예선 통과!!! 🙌 🥳
+
+<img src="/assets/image/event/230513_contest-woori-coding-festival-preliminary-contest/pass_msg.jpeg" width=500px>
+
+본선은 27일! 부산에서 보고싶었는데 부산 CBT센터는 청소년부만 있어서 광주 CBT센터로 신청했다. 🥲
+
+본선도 완전 재미있게 잘 치고 왔으면 좋겠다! 😚
