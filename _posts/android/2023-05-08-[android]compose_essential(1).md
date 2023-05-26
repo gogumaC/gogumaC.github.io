@@ -1,7 +1,7 @@
 ---
-title: "[android] Compose 기본사항(1) : Jetpack Compose 시작 튜토리얼"
+title: "[android] Compose 기본사항(1) 정리"
 categories: 안드로이드 jetpackCompose
-excerpt : "Jetpack Compose 시작 튜토리얼"
+excerpt : " Compose 기본사항(1) : Jetpack Compose 시작 튜토리얼"
 tags:
     - [android, JetpackCompose, compose, tutorial]
 date : 2023-05-08

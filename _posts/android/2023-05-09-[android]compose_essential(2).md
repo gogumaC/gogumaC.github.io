@@ -1,7 +1,7 @@
 ---
-title: "[android] Compose 기본사항(2) : Compose 개요 "
+title: "[android] Compose 기본사항(2) 정리"
 categories: 안드로이드 jetpackCompose
-excerpt : "2021 Google IO - Jetpack Compose 개요 정리"
+excerpt : "Compose 기본사항(2) : Compose 개요 (2021 Google IO)"
 tags:
     - [android, JetpackCompose, compose, 2021GoogleIO,]
 date : 2023-05-09
