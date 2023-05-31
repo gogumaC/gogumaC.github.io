@@ -248,10 +248,11 @@ Text(
 ```kotlin
 //요소 사이 간격 지정
 LazyRow(
-	verticalArrangement=Arrangement.spacedBy(8.dp)
+	horizontalArrangement=Arrangement.spacedBy(8.dp)
 )
 LazyColumn(
-	horizontalArrangement=Arrangement.spacedBy(8.dp)
+    verticalArrangement=Arrangement.spacedBy(8.dp)
+	
 )
 
 //내용물 패딩 지정
