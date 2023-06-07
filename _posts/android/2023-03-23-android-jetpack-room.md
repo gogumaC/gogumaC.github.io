@@ -1,7 +1,6 @@
 ---
 title: "[android][kotlin] ROOM 개념 및 사용법"
-categories: 
-    - android room
+categories: android room
 tags: 
     - [android, room, ROOM, jetpack]
 date: 2023-03-23
