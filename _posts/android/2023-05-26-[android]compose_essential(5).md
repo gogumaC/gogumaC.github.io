@@ -1,6 +1,6 @@
 ---
 title: "[android] Compose 기본사항(5) 정리"
-categories: 안드로이드 jetpackCompose
+categories: android jetpackCompose
 excerpt : "Compose 기본사항(5) : Compose의 기본 레이아웃 "
 tags:
     - [android, JetpackCompose, compose]

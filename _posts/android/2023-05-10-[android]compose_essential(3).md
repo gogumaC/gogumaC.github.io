@@ -1,6 +1,6 @@
 ---
 title: "[android] Compose 기본사항(3) 정리"
-categories: 안드로이드 jetpackCompose
+categories: android jetpackCompose
 excerpt : "Compose 기본사항(3) : Compose 이해"
 tags:
     - [android, JetpackCompose, compose,]
