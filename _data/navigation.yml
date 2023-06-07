@@ -1,18 +1,33 @@
 # main links
 main:
-  - title: "Home🏠"
-    url: /
+  - title: "About me🌟"
+    url: https://chip-thought-999.notion.site/b1af74415c1e42408a339feb64c0a3d2?pvs=4
 
   - title: "Projects🚀"
     sublinks:
-    - title: ClimbUp 🧗‍♀️
-    url: /climbup/
+    - title: "ClimbUp 🧗‍♀️"
+      url: /projects/climbup/
+
+  - title: "알고리즘🧠"
+    sublinks:
+    - title: "BOJ"
+      url: /algorithm/BOJ
+    - title : "프로그래머스"
+      url: /algorithm/programmers
+    - title : 종만북
+      url: /algorithm/jongmanbook
+
+  - title: "안드로이드👾"
+    sublinks:
+    - title: "Jetpack Compose"
+      url: /android/jetpackCompose
+
 
   - title: "Categories🗂️"
     url: /categories/
 
-  - title : "Tags🏷️"
-    url: /tags/
+  # - title : "Tags🏷️"
+  #   url: /tags/
 
   # sidebar-category:
   #   - title: "안드로이드"
