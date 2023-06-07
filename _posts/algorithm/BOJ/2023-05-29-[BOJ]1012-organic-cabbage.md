@@ -1,6 +1,6 @@
 ---
 title: "[BOJ]1012 유기농 배추🥬 (java,kotlin)"
-categories: BOJ
+categories: algorithm BOJ
 excerpt : "1003. 유기농 배추🥬"
 tags:
     - [Beakjoon,BOJ,'1012',algorithm,kotlin,java,DFS,BFS]

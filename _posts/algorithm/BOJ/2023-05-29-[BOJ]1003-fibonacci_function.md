@@ -1,6 +1,6 @@
 ---
 title: "[BOJ]1003 피보나치 함수 (java,kotlin)"
-categories: BOJ
+categories: algorithm BOJ
 excerpt : "1003. 피보나치 함수"
 tags:
     - [Beakjoon,algorithm,kotlin,java,DP,pair]

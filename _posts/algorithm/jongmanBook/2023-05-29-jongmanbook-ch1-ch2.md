@@ -1,7 +1,7 @@
 ---
-title: "[종만북] 1주차 : 문제 해결 개관 , 코딩과 디버깅에 관하여 "
+title: "[종만북] (1)문제 해결 시작하기 - CH1. 문제 해결 개관 , CH2. 코딩과 디버깅에 관하여 "
 excerpt : "프로그래밍 대회에서 배우는 알고리즘 문제 해결 전략 : p.5 ~ p.86"
-categories: 알고리즘
+categories: algorithm jongmanbook
 tags:
     - [algorithm,종만북,java]
 date : 2023-05-29
