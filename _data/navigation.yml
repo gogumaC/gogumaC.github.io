@@ -1,11 +1,53 @@
 # main links
 main:
-  - title: "Home🏠"
-    url: /
-  - title: "Categories🗂️"
+  - title: "About me🌟"
+    url: https://chip-thought-999.notion.site/b1af74415c1e42408a339feb64c0a3d2?pvs=4
+
+  - title: "프로젝트🚀"
+    url: /projects/
+    sublinks:
+    - title: "ClimbUp 🧗‍♀️"
+      url: /projects/climbup/
+
+  - title: "알고리즘🧠"
+    url: /algorithm/
+    sublinks:
+    - title: "BOJ"
+      url: /algorithm/BOJ
+    - title : "프로그래머스"
+      url: /algorithm/programmers
+    - title : 종만북
+      url: /algorithm/jongmanbook
+
+  - title: "안드로이드👾"
+    url : /android/
+    sublinks:
+    - title: "Jetpack Compose"
+      url: /android/jetpackCompose
+
+
+  - title: "카테고리🗂️"
     url: /categories/
-  - title : "Tags🏷️"
-    url: /tags/
+
+  # - title : "Tags🏷️"
+  #   url: /tags/
+
+  # sidebar-category:
+  #   - title: "안드로이드"
+  #     url: /android
+  #   - title: "알고리즘"
+  #     sublinks:
+  #     - title: BOJ
+  #     url: /boj
+  #     - title: 프로그래머스
+  #     url: programmers
+
+  #   - title: "프로그래머스"
+  #     url: /안드로이드
+  #   - title: "안드로이드"
+  #     url: /안드로이드  
+      
+
   
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/

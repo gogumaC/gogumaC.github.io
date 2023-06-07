@@ -1,7 +1,7 @@
 ---
 title: "[ClimbUp🧗][ERROR] gradle, androidStudio JDK version 호환성 문제"
 excerpt : "jvm target compatibility should be set to the same Java version. 에러 해결"
-categories: climbup
+categories: projects climbup
 tags:
     - [climbup,project, build,ksp,kapt,JVM,JVMToolChain,JDK,]
 date : 2023-06-06
