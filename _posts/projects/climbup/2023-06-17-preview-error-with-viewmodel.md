@@ -1,6 +1,6 @@
 ---
 title: "[ClimbUp🧗]뷰모델 사용 시 Compose Preview 에러 해결"
-excerpt :
+excerpt : "뷰모델 사용 시 Compose Preview 에러 해결"
 categories: projects climbup
 tags:
     - [climbup,project,viewmodel,preview,issue]
