@@ -1,7 +1,7 @@
 ---
 title: "[BOJ]1012 유기농 배추🥬 (java,kotlin)"
 categories: algorithm BOJ
-excerpt : "1003. 유기농 배추🥬"
+excerpt : "1003 유기농 배추🥬"
 tags:
     - [Beakjoon,BOJ,'1012',algorithm,kotlin,java,DFS,BFS]
 date : 2023-05-29
@@ -150,8 +150,10 @@ fun dfs(x:Int,y:Int){
      --- | --- | --- 
      시간(ms) | 192 | 192 
      메모리(KB) | 18012 | 17448 |
-- bfs를 구현할 때 스택을 사용하면 된다는게 기억이 안 나서 좀 헤맸다.<br> 다음에는 잘 기억해서 빠릿빠릿하게 풀어보자!⚡
+- bfs를 구현할 때 ~~스택~~큐를 사용하면 된다는게 기억이 안 나서 좀 헤맸다. <br> 다음에는 잘 기억해서 빠릿빠릿하게 풀어보자!⚡
 
++) 이때는 스택인줄 알고 스택으로 풀었는데 뭔가 운이 좋았나보다..ㅎ
++) 어쨌든 BFS는 큐다!! 스택이 아니라 큐!!!
 ```java
 import java.io.BufferedReader;
 import java.io.IOException;
