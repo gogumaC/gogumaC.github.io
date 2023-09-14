@@ -190,6 +190,8 @@ toc_sticky : true
 
 발표 후 질의 응답 시간이 있었는데 질문이 많이 없어서 우리 발표내용이 별로인가 라는 생각이 잠깐들었지만 결국 **‘우수소프티어 상’**을 받았다!!🎉🙌🥳🎊
 
+<img src="/assets/image/review/230912_softeer-bootcamp-review/award_certificate.jpg" width=500px>
+
 <br>
 
 ## 현재
