@@ -8,6 +8,8 @@ main:
     sublinks:
     - title: "ClimbUp 🧗‍♀️"
       url: /projects/climbup/
+    - title: "DevPulse❤️"
+      url: /projects/devpulse/
 
   - title: "알고리즘🧠"
     url: /algorithm/
