@@ -4,8 +4,8 @@ excerpt: "그런의미로 세상에서 제일 귀찮은 링크드인 포스팅�
 categories: projects lnkedin-auto-posting
 tags:
   - [linkedin, auto-posting, 포스팅, githubAction, make, integromat]
-date: 2023-10-30 21:41:00 +09:00
-last_modified_at: 2023-10-30 21:41:00 +09:00
+date: 2023-10-30 21:41:00+09:00
+last_modified_at: 2023-10-30 21:41:00+09:00
 toc: ture
 toc_sticky: true
 ---
