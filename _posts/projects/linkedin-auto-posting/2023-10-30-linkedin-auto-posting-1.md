@@ -8,6 +8,10 @@ date: 2023-10-30 21:41:00+09:00
 last_modified_at: 2023-10-30 21:41:00+09:00
 toc: ture
 toc_sticky: true
+header:
+  overlay_image: /assets/image/projects/linkedin-auto-posting/overview.png
+  overlay_filter: linear-gradient(rgba(0, 0, 0, 0.5), rgba(217, 217, 217, 0.5))
+  image: /assets/image/projects/linkedin-auto-posting/overview.png
 ---
 
 요즘 왠지 매너리즘 비스무리한 거에 빠져서 만사가 귀찮아지고 있다.
