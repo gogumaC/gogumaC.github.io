@@ -31,12 +31,12 @@
   {%assign sub_categories=category.sub%}
   
   <div>
-    <a class="category" href="{{site.baseurl}}/{{category.key}}">{{category.title}} [{{category_posts.size}}]</a>
+    <a class="category" href="{{site.baseurl}}/{{category.key}}">{{category.title}} [{{category_posts.size | default: 0}}]</a>
   
     {%for sub_category in sub_categories%}
       {%assign sub_category_posts=categories[sub_category.key]%}
       <div>
-        <a class="sub-category" href="{{site.baseurl}}/{{category.key}}/{{sub_category.key}}">{{sub_category.title}} [{{sub_category_posts.size}}]</a>
+        <a class="sub-category" href="{{site.baseurl}}/{{category.key}}/{{sub_category.key}}">{{sub_category.title}} [{{sub_category_posts.size | default: 0}}]</a>
       </div>
     {%endfor%}
   </div>
