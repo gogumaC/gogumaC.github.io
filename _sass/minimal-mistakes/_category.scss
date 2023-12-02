@@ -1,0 +1,44 @@
+.category {
+  font-size: small;
+  font-weight: bold;
+  color: black;
+
+  &:visited {
+    color: black;
+  }
+}
+
+.sub-category {
+  margin-left: 20px;
+  font-size: small;
+  color: black;
+  &:visited {
+    color: black;
+  }
+}
+
+.category-hr {
+  border: 0;
+  border-top: 1px dashed gainsboro;
+  height: 1px;
+  width: 95%;
+  margin-left: 0;
+}
+
+@media screen and (max-width: 1000px) {
+  #mainMenu {
+    display: none;
+  }
+  #dropdownMenu {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1001px) {
+  #dropdownMenu {
+    display: none;
+  }
+  #mainMenu {
+    display: block;
+  }
+}
