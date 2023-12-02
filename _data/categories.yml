@@ -9,6 +9,10 @@ main:
         title: "ClimbUp 🧗‍♀️"
         url: /projects/climbup/
 
+      - key: linkedin-auto-posting
+        title: "링크드인 자동 포스팅 📤"
+        url: /projects/linkedin-auto-posting/
+
   - key: algorithm
     title: "알고리즘🧠"
     url: /algorithm/
