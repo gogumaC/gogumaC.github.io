@@ -48,7 +48,6 @@
 {% for category in categories%}
 
   {%assign category_name=category[0]%}
-  {%assign category_title=category_name%}
   {%assign category_posts=category[1]%}
 
   
@@ -58,7 +57,11 @@
   {%endfor%}
 
   {%for post in category_posts%}
-    {%if post.categories.size > 1 %}{%assign display=false%}{%endif%}
+    {%if post.categories.size > 1 %}
+      {%if post.categories[1]==category_name%}
+        {%assign display=false%}
+      {%endif%}
+    {%endif%}
   {%endfor%}
 
   {%if display%}
