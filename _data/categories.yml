@@ -1,0 +1,36 @@
+# main links
+main:
+  - key: projects
+    title: "프로젝트🚀"
+    url: /projects/
+
+    sub:
+      - key: climbup
+        title: "ClimbUp 🧗‍♀️"
+        url: /projects/climbup/
+
+  - key: algorithm
+    title: "알고리즘🧠"
+    url: /algorithm/
+
+    sub:
+      - key: BOJ
+        title: "BOJ"
+        url: /algorithm/BOJ
+
+      - key: programmers
+        title: "프로그래머스"
+        url: /algorithm/programmers
+
+      - key: jongmanbook
+        title: 종만북
+        url: /algorithm/jongmanbook
+
+  - key: android
+    title: "안드로이드👾"
+    url: /android/
+
+    sub:
+      - key: jetpackCompose
+        title: "Compose"
+        url: /android/jetpackCompose

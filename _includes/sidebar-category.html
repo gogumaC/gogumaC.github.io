@@ -1,0 +1,74 @@
+
+
+{% case site.category_archive.type %}
+  {% when "liquid" %} {% assign path_type ="#" %}
+  {% when "jekyll-archives" %} {% assign path_type = nil %}
+{% endcase %}
+{% if site.category_archive.path %}
+{% assign categories_sorted = page.categories | sort_natural %}
+<p >
+  <strong>
+    <i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 
+    카테고리
+    <a id="dropdownMenu" href="javascript:void(0);">
+     (펼쳐보기)
+    </a>
+  </strong>
+</p>
+
+{% endif %}
+
+
+<!-- 카테고리 만들기 -->
+<div id="mainMenu">
+{% comment %} 맵핑된 카테고리 {% endcomment %}
+{% assign categories_info=site.data.categories.main %}
+{% assign categories=site.categories%}
+
+{%for category in categories_info%}
+  {%assign category_key=category.key%}
+  {%assign category_posts=categories[category_key]%}
+  {%assign sub_categories=category.sub%}
+  
+  <div>
+    <a class="category" href="{{site.baseurl}}/{{category.key}}">{{category.title}} [{{category_posts.size}}]</a>
+  
+    {%for sub_category in sub_categories%}
+      {%assign sub_category_posts=categories[sub_category.key]%}
+      <div>
+        <a class="sub-category" href="{{site.baseurl}}/{{category.key}}/{{sub_category.key}}">{{sub_category.title}} [{{sub_category_posts.size}}]</a>
+      </div>
+    {%endfor%}
+  </div>
+  <hr class="category-hr">
+{% endfor %}
+
+
+{% comment %} 제목설정 안하고 그냥 쓰는 카테고리 {% endcomment %}
+{% for category in categories%}
+
+  {%assign category_name=category[0]%}
+  {%assign category_title=category_name%}
+  {%assign category_posts=category[1]%}
+
+  
+  {%assign display=true%}
+  {%for mapped in categories_info%}
+    {%if mapped.key==category_name%} {%assign display=false%} {%endif%}
+  {%endfor%}
+
+  {%for post in category_posts%}
+    {%if post.categories.size > 1 %}{%assign display=false%}{%endif%}
+  {%endfor%}
+
+  {%if display%}
+
+    <div>
+    <a class="category" href="{{site.baseurl}}/{{category_name}}">{{category_name}} [{{category_posts.size}}]</a>
+    </div>
+    <hr class="category-hr">
+  {%endif%}
+  
+{%endfor%}
+
+</div>
