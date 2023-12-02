@@ -38,3 +38,7 @@ main:
       - key: jetpackCompose
         title: "Compose"
         url: /android/jetpackCompose
+
+  - key: blog
+    title: "블로그🐳"
+    url: /blog/
