@@ -5,13 +5,16 @@ main:
     url: /projects/
 
     sub:
-      - key: climbup
-        title: "ClimbUp 🧗‍♀️"
-        url: /projects/climbup/
 
       - key: linkedin-auto-posting
         title: "링크드인 자동 포스팅 📤"
         url: /projects/linkedin-auto-posting/
+
+      - key: climbup
+        title: "ClimbUp 🧗‍♀️"
+        url: /projects/climbup/
+
+
 
   - key: algorithm
     title: "알고리즘🧠"
@@ -36,8 +39,12 @@ main:
 
     sub:
       - key: jetpackCompose
-        title: "Compose"
+        title: "Compose🧱"
         url: /android/jetpackCompose
+      
+      - key: error
+        title: "Errors🚨"
+        url: /android/error
 
   - key: blog
     title: "블로그🐳"
