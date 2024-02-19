@@ -2,9 +2,9 @@
 title: "@JvmName으로 JVM Signiture 타입소거 관련 오버로딩 이슈 해결"
 categories: android troubleshooting
 tags:
-    - [android, JetpackCompose, compose, annotation, @jvmName, overloading]
-date : 2024-02-19 22:00:00
-last_modified_at: 2024-02-19 22:00:00
+    - [android, JetpackCompose, compose, annotation, "@jvmName", overloading]
+date : 2024-02-19 22:00
+last_modified_at: 2024-02-19 22:00
 toc : ture
 toc_sticky : true
 ---
