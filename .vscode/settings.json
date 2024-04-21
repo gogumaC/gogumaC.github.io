@@ -4,5 +4,9 @@
     },
     "files.associations":{
         "*.html":"liquid"
-    }
+    },
+    "pasteImage.basePath": "${projectRoot}",
+    "pasteImage.path": "${projectRoot}/assets/image",
+    "pasteImage.namePrefix": "",
+    "pasteImage.prefix": "/"
 }
