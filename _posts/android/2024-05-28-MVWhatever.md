@@ -1,6 +1,6 @@
 ---
 title: "M-V-Wahtever, MV시리즈 정리"
-categories: android etc
+categories: android
 tags:
     - [android, mvvm, mvc, mvp, designPattern]
 date : 2024-05-28 18:20
