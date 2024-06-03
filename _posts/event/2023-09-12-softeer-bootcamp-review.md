@@ -1,7 +1,7 @@
 ---
 title: "[현대 소프티어 부트캠프🚗] 부트캠프 후기"
 excerpt : "드디어 2달 동안의 소프티어 부트캠프가 막을 내렸다!!"
-categories: review
+categories: event
 tags:
     - [현대, 소프티어부트캠프,소프티어,부트캠프,2기]
 date : 2023-09-12
