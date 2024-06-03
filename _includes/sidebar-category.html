@@ -21,9 +21,9 @@
 
 <!-- 카테고리 만들기 -->
 <div id="mainMenu">
+
 {% comment %} 맵핑된 카테고리 {% endcomment %}
-{% assign categories_info=site.data.categories.main %}
-{% assign categories=site.categories%}
+{% comment %} 
 
 {%for category in categories_info%}
   {%assign category_key=category.key%}
@@ -41,24 +41,27 @@
     {%endfor%}
   </div>
   <hr class="category-hr">
-{% endfor %}
+{% endfor %} {% endcomment %}
 
+{% assign categories_info=site.data.categories.main %}
+{% assign categories=site.categories | sort %}
 
-{% comment %} 제목설정 안하고 그냥 쓰는 카테고리 {% endcomment %}
 {% for category in categories%}
 
-  {%assign category_name=category[0]%}
+  {%assign category_key=category[0]%}
+  {%assign category_label=category[0]%}
   {%assign category_posts=category[1]%}
-
   
   {%assign display=true%}
+
   {%for mapped in categories_info%}
-    {%if mapped.key==category_name%} {%assign display=false%} {%endif%}
+    {%if mapped.key==category_key%} {%assign category_label=mapped.title%} {%endif%}
   {%endfor%}
 
+  {% comment %} 하위 카테고리 필터 {% endcomment %}
   {%for post in category_posts%}
     {%if post.categories.size > 1 %}
-      {%if post.categories[1]==category_name%}
+      {%if post.categories[1]==category_key%}
         {%assign display=false%}
       {%endif%}
     {%endif%}
@@ -67,9 +70,10 @@
   {%if display%}
 
     <div>
-    <a class="category" href="{{site.baseurl}}/{{category_name}}">{{category_name}} [{{category_posts.size}}]</a>
+    <a class="category" href="{{site.baseurl}}/{{category_key}}">{{category_label}} [{{category_posts.size}}]</a>
     </div>
     <hr class="category-hr">
+        
   {%endif%}
   
 {%endfor%}
