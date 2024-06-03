@@ -1,7 +1,7 @@
 ---
 title: "[현대 소프티어 부트캠프🚗] 부트캠프 지원후기 (합격기)"
 excerpt : "현대 소프티어 부트캠프 지원, 합격 후기"
-categories: review
+categories: event
 tags:
     - [현대, 소프티어부트캠프,소프티어,부트캠프,2기]
 date : 2023-06-29
