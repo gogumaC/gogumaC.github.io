@@ -353,6 +353,6 @@ class StockLiveData(symbol: String) : LiveData<BigDecimal>() {
 [Android Transformations](https://developer.android.com/reference/androidx/lifecycle/Transformations#map\(androidx.lifecycle.LiveData%3CX%3E,%20androidx.arch.core.util.Function%3CX,%20Y%3E\))
 
 
-[Android의 Kotlin 흐름  \|  Android Developers](https://developer.android.com/kotlin/flow?hl=ko)
+[Android의 Kotlin Flow  \|  Android Developers](https://developer.android.com/kotlin/flow?hl=ko)
 
 [Flow](https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
