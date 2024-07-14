@@ -18,11 +18,11 @@ minimal_mistakes_skin    : "default" #"default" # "air", "aqua", "contrast", "da
 
 # Site Settings
 locale                   : "ko" #default "en-US"
-title                    : "gogumaC🧗 개발 블로그"
+title                    : "gogumaC's DevLog🚗"
 title_separator          : "-"
-subtitle                 : "android" # site tagline that appears below site title in masthead
-name                     : "gogumC"
-description              : "Go!gumaC! gogumaC의 안드로이드 개발 블로그😊"
+subtitle                 : "하나씩 쌓아 나가기" # site tagline that appears below site title in masthead
+name                     : "gogumaC"
+description              : "gogumaC의 개발 기록"
 url                      : "https://gogumaC.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "gogumaC/gogumaC.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
