@@ -1,5 +1,5 @@
 ---
-title: "Github Action과 Make를 활용한 LinkedIn 자동 포스팅(1)"
+title: "Github Action과 Make를 활용한 LinkedIn 자동 포스팅"
 excerpt: "그런의미로 세상에서 제일 귀찮은 링크드인 포스팅쓰기를 깃허브 액션과 Make(구 Integromat)라는 자동화 툴을 사용해서 자동화 해보기로 했다."
 categories: projects linkedin-auto-posting
 tags:
