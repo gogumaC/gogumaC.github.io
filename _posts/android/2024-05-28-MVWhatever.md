@@ -1,5 +1,5 @@
 ---
-title: "M-V-Wahtever, MV시리즈 정리"
+title: "M-V-Whatever, MV시리즈 정리"
 categories: android
 tags:
     - [android, mvvm, mvc, mvp, designPattern]
