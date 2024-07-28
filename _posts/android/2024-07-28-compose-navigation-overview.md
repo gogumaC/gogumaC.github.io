@@ -3,8 +3,8 @@ title: "Compose Navigation Overview"
 categories: android jetpackCompose
 tags:
     - [android, compose, navigation]
-date : 2024-07-27 23:45
-last_modified_at: 2024-07-27 23:45
+date : 2024-07-28 14:53
+last_modified_at: 2024-07-28 14:53
 toc : ture
 toc_sticky : true
 excerpt : "compose navigation 간단한 사용법 및 type safety"
@@ -32,6 +32,10 @@ excerpt : "compose navigation 간단한 사용법 및 type safety"
 - `Graph` : 앱 내의 모든 navigation destination과 화면 연결 방식을 정의하는 자료구조. 여기에 미리 정의된 화면으로만 이동할 수 있다. 대충 지도 느낌.
 - `Destination` : navigation graph의 노드. host가 보여주는 화면
 - `Route` : destination으로 이동하는데 사용되는 경로. destination과 이동 시 필요한 데이터를 고유하게 식별하기 위한 Serializable객체(ex 문자열)
+
+개인적으로는 개념 자체는 약간 이런 느낌이다.
+
+![](/assets/image/2024-07-28-14-53-06.png)
 
 ## dependency
 
@@ -96,7 +100,7 @@ NavHost(navController=navController,startDestination=ScreenA){
 
 - NavHost에서 NavGraph를 만들때 route에 string이나 정수 id를 전달할 수 있다.
 
-🚨 이 경우 나중에 매개변수를 보낼 때 “screenA/arg1/arg2” 뭐 이런 식으로 route를 전달하게 되서 타입안전성이 없다.
+🚨 이 경우 나중에 매개변수를 보낼 때 “screenA/arg1/arg2” 뭐 이런 식으로 route를 전달하게 되서 Type safety하지 않다.
 
 ```kotlin
 NavHost(navController=navController,startDestination="ScreenA"){
