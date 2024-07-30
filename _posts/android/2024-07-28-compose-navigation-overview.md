@@ -48,7 +48,7 @@ compose navigation을 사용하기 위해서는 모듈 레벨의 build.gradle �
 ```kotlin
 dependencies{
     val nav_version="2.8.0-alpha08"
-    implementation ("androidx.navigation:navigation:navigation-compose:$nav_version")
+    implementation ("androidx.navigation:navigation-compose:$nav_version")
 }
 
 ```
