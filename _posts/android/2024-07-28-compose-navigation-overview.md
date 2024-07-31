@@ -8,6 +8,10 @@ last_modified_at: 2024-07-28 14:53
 toc : ture
 toc_sticky : true
 excerpt : "compose navigation 간단한 사용법 및 type safety"
+header:
+  overlay_image: /assets/image/2024-07-28-14-53-06.png
+  overlay_filter: linear-gradient(rgba(0, 0, 0, 0.5), rgba(217, 217, 217, 0.5))
+  image: /assets/image/2024-07-28-14-53-06.png
 ---
 
 여차저차 하다보니 프로젝트 코드의 네비게이션 부분을 날려버렸다🥲
