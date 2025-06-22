@@ -1,5 +1,5 @@
 ---
-title: "GPIO Overview"
+title: "[Embedded] GPIO Overview"
 categories: embedded
 tags:
     - [GPIO, embedded, LED]
