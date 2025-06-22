@@ -14,6 +14,10 @@ main:
         title: "ClimbUp 🧗‍♀️"
         url: /projects/climbup/
 
+  - key: embedded
+    title: "Embedded🤖"
+    url: /embedded/
+
   - key: algorithm
     title: "알고리즘🧠"
     url: /algorithm/
@@ -56,3 +60,4 @@ main:
 
   - key: tools
     title: Tools🛠️
+
