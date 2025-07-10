@@ -1,6 +1,7 @@
 ---
-title: "[세미나] STM 저전력 MCU소개 및 IAR workbench를 사용한 실무 디버깅 "
+title: "[세미나] ST 저전력 MCU소개 및 IAR workbench를 사용한 실무 디버깅 "
 categories: event
+excerpt : "이번 세미나에서는 st에서 나오신 연사님께서 초저전력 MCU인 stm32u3와 관련된 기술에 대해 간단하게 소개해 주셨고, iar세션에서 workbench와 stm32u3가 들어간 보드를 사용해서 디버깅과 저전력 모드에 대한 실습을 진행했다."
 tags:
     - [IAR, STM, STM32U3, low power, MCU, debugging, embedded, security]
 date : 2025-07-10 21:36
@@ -9,13 +10,13 @@ toc : ture
 toc_sticky : true
 ---
 
-오랜만에 기술 세미나에 다녀왔다.
+오늘은 기술 세미나에 다녀왔다.
 
 여의도는 처음가봐서 기대를 많이 했는데 오늘 너무 덥고 시간이 촉박했어서 크게 구경을 못했다.
 
 이번 세미나에서는 st에서 나오신 연사님께서 초저전력 MCU인 stm32u3와 관련된 기술에 대해 간단하게 소개해 주셨고, iar세션에서 workbench와 stm32u3가 들어간 보드를 사용해서 디버깅과 저전력 모드에 대한 실습을 진행했다.
 
-## ST STM32U3 : ST Korea
+## STM32U3 : ST Korea
 
 이 세션에서 기억에 남았던 부분은 STM32U3에서 사용된 저전력 기술이었다.
 
@@ -45,7 +46,7 @@ Near Threshold design이라는 기술이었는데 CMOS의 threshold와 아주 �
 
 ---
 
-## IAR workbench
+## workbench Debbuging : IAR
 
 workbench을 써본적은 있는데 사실 그냥 코드 편집기로서 사용을 많이 했지 이렇게 좋은 디버깅 기능이 많을지는 상상도 못했다.
 
@@ -120,4 +121,18 @@ map파일에서 arm instruction은 주소를 even으로, thumb은 odd로 표현�
 
 ![](/assets/image/2025-07-10-23-57-28.png)
 
-이거는 디버거랑 같이 사용할때 쓸수 있는 타임라인 창인데 
+이거는 디버거랑 같이 사용할때 쓸수 있는 타임라인 창인데 시각적으로 잘보여서 데이터 디버깅하기 좋다.
+
+참고로 타임라인 화면에서 저기 OFF되어있는 부분에 우클릭하고 Enable을 체크해줘야 사용이 가능하다.
+
+
+
+## 마무리
+
+![](/assets/image/2025-07-11-00-04-47.png)
+
+끝내고 나왔더니 이런 수료증도 주셨다ㅎㅎ
+
+여러모로 재미있는 키워드들을 많이 얻어가는 유익한 시간이었다.
+
+
